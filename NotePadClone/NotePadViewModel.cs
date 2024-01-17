@@ -31,11 +31,13 @@ internal class NotePadViewModel : ObservableObject
     }
 
     public ICommand NewFileCommand { get; }
+    public ICommand SaveFileCommand { get; }
     public ICommand SaveAsFileCommand { get; }
 
     public NotePadViewModel()
     {
         NewFileCommand = new DelegateCommand(_ => NewFile());
+        SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
     }
 
@@ -43,6 +45,18 @@ internal class NotePadViewModel : ObservableObject
     {
         TextContent = string.Empty;
         _currentFilePath = null;
+    }
+
+    private void SaveFile()
+    {
+        if (!string.IsNullOrEmpty(_currentFilePath))
+        {
+            File.WriteAllText(_currentFilePath, TextContent);
+        }
+        else
+        {
+            SaveAsFile();
+        }
     }
 
     private void SaveAsFile()
@@ -54,4 +68,7 @@ internal class NotePadViewModel : ObservableObject
             File.WriteAllText(_currentFilePath, TextContent);
         }
     }
+
+    private bool CanSaveFile() => !string.IsNullOrEmpty(TextContent);
+
 }
