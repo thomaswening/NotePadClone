@@ -31,12 +31,14 @@ internal class NotePadViewModel : ObservableObject
     }
 
     public ICommand NewFileCommand { get; }
+    public ICommand OpenFileCommand { get; }
     public ICommand SaveFileCommand { get; }
     public ICommand SaveAsFileCommand { get; }
 
     public NotePadViewModel()
     {
         NewFileCommand = new DelegateCommand(_ => NewFile());
+        OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
     }
@@ -45,6 +47,16 @@ internal class NotePadViewModel : ObservableObject
     {
         TextContent = string.Empty;
         _currentFilePath = null;
+    }
+
+    private void OpenFile()
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        if (openFileDialog.ShowDialog() == true)
+        {
+            _currentFilePath = openFileDialog.FileName;
+            TextContent = File.ReadAllText(_currentFilePath);
+        }
     }
 
     private void SaveFile()
