@@ -41,6 +41,37 @@
             <!-- Edit and other menus -->
         </Menu>
         
+        <!-- Status Bar -->
+        <StatusBar DockPanel.Dock="Bottom"
+                   Background="{StaticResource MaterialDesignDarkBackground}"
+                   Foreground="{StaticResource MaterialDesignDarkForeground}"
+                   HorizontalAlignment="Right">
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="File Size: "
+                               FontWeight="Bold" />
+                    <TextBlock Text="{Binding FileSizeInBytes}" />
+                </StackPanel>
+            </StatusBarItem>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Characters: "
+                               FontWeight="Bold" />
+                    <TextBlock Text="{Binding NumberOfCharacters}" />
+                </StackPanel>
+            </StatusBarItem>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Lines: "
+                               FontWeight="Bold" />
+                    <TextBlock Text="{Binding NumberOfLines}" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+
         <!-- Text Editor Area -->
         <TextBox AcceptsReturn="True"
                  AcceptsTab="True"
