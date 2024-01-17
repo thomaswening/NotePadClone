@@ -31,15 +31,27 @@ internal class NotePadViewModel : ObservableObject
     }
 
     public ICommand NewFileCommand { get; }
+    public ICommand SaveAsFileCommand { get; }
 
     public NotePadViewModel()
     {
         NewFileCommand = new DelegateCommand(_ => NewFile());
+        SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
     }
 
     private void NewFile()
     {
         TextContent = string.Empty;
         _currentFilePath = null;
+    }
+
+    private void SaveAsFile()
+    {
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        if (saveFileDialog.ShowDialog() == true)
+        {
+            _currentFilePath = saveFileDialog.FileName;
+            File.WriteAllText(_currentFilePath, TextContent);
+        }
     }
 }
