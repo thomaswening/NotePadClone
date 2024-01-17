@@ -15,6 +15,7 @@ namespace NotePadClone;
 internal class NotePadViewModel : ObservableObject
 {
     private string? _textContent;
+    private string? _currentFilePath;
 
     public string? TextContent
     {
@@ -27,5 +28,18 @@ internal class NotePadViewModel : ObservableObject
                 OnPropertyChanged(nameof(TextContent));
             }
         }
+    }
+
+    public ICommand NewFileCommand { get; }
+
+    public NotePadViewModel()
+    {
+        NewFileCommand = new DelegateCommand(_ => NewFile());
+    }
+
+    private void NewFile()
+    {
+        TextContent = string.Empty;
+        _currentFilePath = null;
     }
 }
