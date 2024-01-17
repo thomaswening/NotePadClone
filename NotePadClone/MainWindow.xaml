@@ -3,10 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NotePadCloneUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:NotePadClone"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="NotePad Clone"
+        Height="450"
+        Width="800"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}">
 
-    </Grid>
+    <Window.DataContext>
+        <local:NotePadViewModel />
+    </Window.DataContext>
+    
+    <DockPanel>
+        <!-- Text Editor Area -->
+        <TextBox AcceptsReturn="True"
+                 AcceptsTab="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"
+                 TextWrapping="Wrap"
+                 FontFamily="Consolas"
+                 FontSize="12"
+                 Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />
+
+    </DockPanel>
 </Window>
