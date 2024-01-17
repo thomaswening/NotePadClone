@@ -34,6 +34,7 @@ internal class NotePadViewModel : ObservableObject
     public ICommand OpenFileCommand { get; }
     public ICommand SaveFileCommand { get; }
     public ICommand SaveAsFileCommand { get; }
+    public ICommand CloseCommand { get; }
 
     public NotePadViewModel()
     {
@@ -41,6 +42,7 @@ internal class NotePadViewModel : ObservableObject
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
+        CloseCommand = new DelegateCommand(_ => CloseApplication());
     }
 
     private void NewFile()
@@ -82,5 +84,5 @@ internal class NotePadViewModel : ObservableObject
     }
 
     private bool CanSaveFile() => !string.IsNullOrEmpty(TextContent);
-
+    private static void CloseApplication() => Application.Current.Shutdown();
 }
