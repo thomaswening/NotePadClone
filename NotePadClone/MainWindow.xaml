@@ -20,6 +20,27 @@
     </Window.DataContext>
     
     <DockPanel>
+        <!-- Menu Bar -->
+        <Menu DockPanel.Dock="Top">
+
+            <!-- File Menu -->
+            <MenuItem Header="_File">
+                <MenuItem Command="{Binding NewFileCommand}"
+                          Header="_New" />
+                <MenuItem Command="{Binding OpenFileCommand}"
+                          Header="_Open..." />
+                <MenuItem Command="{Binding SaveFileCommand}"
+                          Header="_Save" />
+                <MenuItem Command="{Binding SaveAsFileCommand}"
+                          Header="Save _As..." />
+                <Separator />
+                <MenuItem Command="{Binding CloseCommand}"
+                          Header="_Exit" />
+            </MenuItem>
+
+            <!-- Edit and other menus -->
+        </Menu>
+        
         <!-- Text Editor Area -->
         <TextBox AcceptsReturn="True"
                  AcceptsTab="True"
