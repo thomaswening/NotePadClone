@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -16,18 +17,36 @@ internal class NotePadViewModel : ObservableObject
 {
     private string? _textContent;
     private string? _currentFilePath;
+    private int _numberOfCharacters;
+    private int _numberOfLines;
+    private int _fileSizeInBytes;
 
     public string? TextContent
     {
         get => _textContent;
         set
         {
-            if (_textContent != value)
-            {
-                _textContent = value;
-                OnPropertyChanged(nameof(TextContent));
-            }
+            if (!SetField(ref _textContent, value)) return;
+            UpdateDocumentInfo();
         }
+    }
+
+    public int NumberOfCharacters
+    {
+        get => _numberOfCharacters;
+        set => SetField(ref _numberOfCharacters, value);
+    }
+
+    public int NumberOfLines
+    {
+        get => _numberOfLines;
+        set => SetField(ref _numberOfLines, value);
+    }
+
+    public int FileSizeInBytes
+    {
+        get => _fileSizeInBytes;
+        set => SetField(ref _fileSizeInBytes, value);
     }
 
     public ICommand NewFileCommand { get; }
@@ -43,6 +62,47 @@ internal class NotePadViewModel : ObservableObject
         SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
         CloseCommand = new DelegateCommand(_ => CloseApplication());
+
+        UpdateDocumentInfo();
+    }
+
+    private void UpdateDocumentInfo()
+    {
+        NumberOfCharacters = GetNumberOfVisibleCharacters();
+        NumberOfLines = GetNumberOfLines();
+        FileSizeInBytes = GetFileSizeInBytes();
+    }
+
+    private int GetNumberOfVisibleCharacters()
+    {
+        if (NumberOfNewLines == 0)
+        {
+            return TextContent?.Length - NumberOfNewLines ?? 0;
+        }
+
+        return TextContent!.Length - NumberOfNewLines - 1;
+    }
+
+    private int NumberOfNewLines => Regex.Matches(TextContent ?? string.Empty, Environment.NewLine).Count;
+
+    private int GetFileSizeInBytes() 
+    {
+        if (string.IsNullOrEmpty(_currentFilePath))
+        {
+            return 0;
+        }
+
+        return (int)Convert.ToInt64(new FileInfo(_currentFilePath).Length);
+    }
+
+    private int GetNumberOfLines()
+    {
+        if (NumberOfNewLines == 0 && NumberOfCharacters == 0)
+        {
+            return 0;
+        }
+
+        return NumberOfNewLines + 1;
     }
 
     private void NewFile()
@@ -66,6 +126,7 @@ internal class NotePadViewModel : ObservableObject
         if (!string.IsNullOrEmpty(_currentFilePath))
         {
             File.WriteAllText(_currentFilePath, TextContent);
+            FileSizeInBytes = GetFileSizeInBytes();
         }
         else
         {
@@ -80,6 +141,7 @@ internal class NotePadViewModel : ObservableObject
         {
             _currentFilePath = saveFileDialog.FileName;
             File.WriteAllText(_currentFilePath, TextContent);
+            FileSizeInBytes = GetFileSizeInBytes();
         }
     }
 
