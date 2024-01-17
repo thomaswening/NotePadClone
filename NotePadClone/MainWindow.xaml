@@ -18,29 +18,52 @@
     <Window.DataContext>
         <local:NotePadViewModel />
     </Window.DataContext>
-    
+
     <DockPanel>
         <!-- Menu Bar -->
         <Menu DockPanel.Dock="Top">
+            <Menu.Resources>
+                
+                <Style TargetType="{x:Type MenuItem}"
+                       BasedOn="{StaticResource MaterialDesignMenuItem}">
+                    
+                    <Setter Property="OverridesDefaultStyle"
+                            Value="True" />
 
+                    <Setter Property="Height"
+                            Value="30" />
+                </Style>
+            </Menu.Resources>
+            
             <!-- File Menu -->
-            <MenuItem Header="_File">
+            <MenuItem Header="_File"
+                      Height="30">                
+                
                 <MenuItem Command="{Binding NewFileCommand}"
-                          Header="_New" />
+                          Header="_New"
+                          Height="30" />
+                
                 <MenuItem Command="{Binding OpenFileCommand}"
-                          Header="_Open..." />
+                          Header="_Open..."
+                          Height="30" />
+                
                 <MenuItem Command="{Binding SaveFileCommand}"
-                          Header="_Save" />
+                          Header="_Save"
+                          Height="30" />
+                
                 <MenuItem Command="{Binding SaveAsFileCommand}"
-                          Header="Save _As..." />
+                          Header="Save _As..."
+                          Height="30" />
+                
                 <Separator />
                 <MenuItem Command="{Binding CloseCommand}"
-                          Header="_Exit" />
+                          Header="_Exit"
+                          Height="30" />
             </MenuItem>
 
             <!-- Edit and other menus -->
         </Menu>
-        
+
         <!-- Status Bar -->
         <StatusBar DockPanel.Dock="Bottom"
                    Background="{StaticResource MaterialDesignDarkBackground}"
@@ -79,8 +102,8 @@
                  HorizontalScrollBarVisibility="Auto"
                  TextWrapping="Wrap"
                  FontFamily="Consolas"
-                 FontSize="12"
-                 Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />
-
+                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                 Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />        
+        
     </DockPanel>
 </Window>
