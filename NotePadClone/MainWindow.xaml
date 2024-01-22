@@ -13,7 +13,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="{materialDesign:MaterialDesignFont}">
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        Style="{StaticResource MaterialDesignWindowChrome}">
 
     <Window.DataContext>
         <local:NotePadViewModel />
