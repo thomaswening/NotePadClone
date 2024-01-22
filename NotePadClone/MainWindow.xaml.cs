@@ -9,17 +9,49 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NotePadCloneUI
+using WpfEssentials.Base;
+
 namespace NotePadClone
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// inherits from WindowChromeCommands
     /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            MinimizeCommand = new DelegateCommand(_ => Minimize());
+            MaximizeCommand = new DelegateCommand(_ => Maximize());
+            RestoreCommand = new DelegateCommand(_ => Restore());
+            CloseCommand = new DelegateCommand(_ => Close());
+        }
+
+        public DelegateCommand MinimizeCommand { get; private set; }
+        public DelegateCommand MaximizeCommand { get; private set; }
+        public DelegateCommand RestoreCommand { get; private set; }
+        public DelegateCommand CloseCommand { get; private set; }
+
+        private static void Minimize()
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private static void Maximize()
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+        }
+
+        private static void Restore()
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Normal;
+        }
+
+        private static new void Close()
+        {
+            Application.Current.MainWindow.Close();
         }
     }
 }
