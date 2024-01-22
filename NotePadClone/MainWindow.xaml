@@ -68,7 +68,8 @@
         <StatusBar DockPanel.Dock="Bottom"
                    Background="{StaticResource MaterialDesignDarkBackground}"
                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                   HorizontalAlignment="Right">
+                   HorizontalAlignment="Right"
+                   Padding="15 5">
 
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
@@ -102,6 +103,7 @@
                  HorizontalScrollBarVisibility="Auto"
                  TextWrapping="Wrap"
                  FontFamily="Consolas"
+                 Padding="15"
                  Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                  Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />        
         
