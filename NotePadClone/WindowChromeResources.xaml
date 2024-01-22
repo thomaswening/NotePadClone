@@ -12,7 +12,7 @@
             <Setter.Value>
                 <WindowChrome ResizeBorderThickness="5"
                               CaptionHeight="32"
-                              GlassFrameThickness="0"
+                              GlassFrameThickness="1"
                               UseAeroCaptionButtons="False"
                               CornerRadius="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}" />
             </Setter.Value>            
