@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace NotePadCloneUI
+namespace NotePadClone
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

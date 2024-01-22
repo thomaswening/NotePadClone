@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace NotePadCloneUI
+namespace NotePadClone
 {
     /// <summary>
     /// Interaction logic for App.xaml
