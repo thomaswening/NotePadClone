@@ -9,6 +9,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Microsoft.Win32;
+
 using NotePadClone.Utilities;
 using NotePadClone.ViewModels;
 
@@ -30,6 +32,34 @@ namespace NotePadClone
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.SubscribeToWindowEvents((WindowVm)DataContext);
+
+            var vm = (MainWindowVm)DataContext;
+            vm.OpenFileFunc = ShowOpenFileDialog;
+            vm.SaveFileFunc = OpenSaveFileDialog;
+        }
+
+        private string? OpenSaveFileDialog()
+        {
+            var saveFileDialog = new SaveFileDialog();
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                return saveFileDialog.FileName;
+            }
+
+            return null;
+        }
+
+        private string? ShowOpenFileDialog()
+        {
+            var openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                return openFileDialog.FileName;
+            }
+
+            return null;
         }
     }
 }
