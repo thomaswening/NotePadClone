@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
 using WpfEssentials.Base;
@@ -20,6 +20,7 @@ public class MainWindowVm : ObservableObject
     private int _numberOfCharacters;
     private int _numberOfLines;
     private int _fileSizeInBytes;
+    private bool _isDarkTheme = true;
 
     public string? TextContent
     {
@@ -47,6 +48,16 @@ public class MainWindowVm : ObservableObject
     {
         get => _fileSizeInBytes;
         set => SetField(ref _fileSizeInBytes, value);
+    }
+
+    public bool IsDarkTheme
+    {
+        get => _isDarkTheme;
+        set
+        {
+            if (!SetField(ref _isDarkTheme, value)) return;
+            SwitchTheme();
+        }
     }
 
     public ICommand NewDocumentCommand { get; }
@@ -145,6 +156,18 @@ public class MainWindowVm : ObservableObject
             File.WriteAllText(_currentFilePath, TextContent);
             FileSizeInBytes = GetFileSizeInBytes();
         }
+    }
+
+    private void SwitchTheme()
+    {
+        var paletteHelper = new PaletteHelper();
+        var theme = paletteHelper.GetTheme();
+        var baseTheme = IsDarkTheme
+            ? (IBaseTheme)new MaterialDesignDarkTheme()
+            : (IBaseTheme)new MaterialDesignLightTheme();
+
+        theme.SetBaseTheme(baseTheme);
+        paletteHelper.SetTheme(theme);
     }
 
     private bool CanSaveFile() => !string.IsNullOrEmpty(TextContent);
