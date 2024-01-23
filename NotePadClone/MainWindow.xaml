@@ -29,44 +29,27 @@
 
     <DockPanel>
         <!-- Menu Bar -->
-        <Menu DockPanel.Dock="Top">
-            <Menu.Resources>
-                
-                <Style TargetType="{x:Type MenuItem}"
-                       BasedOn="{StaticResource MaterialDesignMenuItem}">
-                    
-                    <Setter Property="OverridesDefaultStyle"
-                            Value="True" />
-
-                    <Setter Property="Height"
-                            Value="30" />
-                </Style>
-            </Menu.Resources>
+        <Menu DockPanel.Dock="Top" 
+              materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
             
             <!-- File Menu -->
-            <MenuItem Header="_File"
-                      Height="30">                
+            <MenuItem Header="_File">                
                 
                 <MenuItem Command="{Binding NewDocumentCommand}"
-                          Header="_New"
-                          Height="30" />
+                          Header="_New" />
                 
                 <MenuItem Command="{Binding OpenFileCommand}"
-                          Header="_Open..."
-                          Height="30" />
+                          Header="_Open..." />
                 
                 <MenuItem Command="{Binding SaveFileCommand}"
-                          Header="_Save"
-                          Height="30" />
+                          Header="_Save" />
                 
                 <MenuItem Command="{Binding SaveAsFileCommand}"
-                          Header="Save _As..."
-                          Height="30" />
+                          Header="Save _As..." />
                 
                 <Separator />
                 <MenuItem Command="{Binding CloseCommand}"
-                          Header="_Exit"
-                          Height="30" />
+                          Header="_Exit" />
             </MenuItem>
 
             <!-- Edit and other menus -->
@@ -77,20 +60,20 @@
                    HorizontalAlignment="Right"
                    Margin="5">
 
-                <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="File Size: " />
-                    <TextBlock Text="{Binding FileSizeInBytes}" />
-                </StackPanel>
+                <TextBlock Text="{Binding FileSizeInBytes}" />
+            </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Characters: " />
-                    <TextBlock Text="{Binding NumberOfCharacters}" />
-                </StackPanel>
+                <TextBlock Text="{Binding NumberOfCharacters}" />
+            </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Lines: " />
-                    <TextBlock Text="{Binding NumberOfLines}" />
-                </StackPanel>
+                <TextBlock Text="{Binding NumberOfLines}" />
+            </StackPanel>
 
 
             <StackPanel Orientation="Horizontal">
