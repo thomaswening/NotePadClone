@@ -13,7 +13,7 @@ using Microsoft.Win32;
 using WpfEssentials.Base;
 
 namespace NotePadClone.ViewModels;
-internal class MainWindowVm : ObservableObject
+public class MainWindowVm : ObservableObject
 {
     private string? _textContent;
     private string? _currentFilePath;
