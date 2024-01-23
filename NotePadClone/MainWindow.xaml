@@ -86,6 +86,10 @@
                 </StackPanel>
 
 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Dark Mode? " />
+                <ToggleButton Margin="8,0" IsChecked="{Binding IsDarkTheme}" />
+            </StackPanel>
         </DockPanel>
 
         <!-- Text Editor Area -->
