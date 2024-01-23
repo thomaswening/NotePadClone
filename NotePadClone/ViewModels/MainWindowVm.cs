@@ -31,6 +31,8 @@ public class MainWindowVm : WindowVm
         set
         {
             if (!SetField(ref _textContent, value)) return;
+
+            SaveFileCommand.OnCanExecuteChanged();
             UpdateDocumentInfo();
         }
     }
@@ -63,19 +65,17 @@ public class MainWindowVm : WindowVm
         }
     }
 
-    public ICommand NewDocumentCommand { get; }
-    public ICommand OpenFileCommand { get; }
-    public ICommand SaveFileCommand { get; }
-    public ICommand SaveAsFileCommand { get; }
-    public ICommand CloseCommand { get; }
+    public DelegateCommand NewDocumentCommand { get; }
+    public DelegateCommand OpenFileCommand { get; }
+    public DelegateCommand SaveFileCommand { get; }
+    public DelegateCommand SaveAsFileCommand { get; }
 
     public MainWindowVm()
     {
-        NewDocumentCommand = new DelegateCommand(_ => NewDocument());
+        NewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
-        CloseCommand = new DelegateCommand(_ => CloseApplication());
 
         UpdateDocumentInfo();
     }
@@ -121,10 +121,10 @@ public class MainWindowVm : WindowVm
         return NumberOfNewLines + 1;
     }
 
-    private void NewDocument()
+    private void CreateNewDocument()
     {
-        TextContent = string.Empty;
         _currentFilePath = null;
+        TextContent = string.Empty;        
     }
 
     private void OpenFile()
@@ -134,8 +134,7 @@ public class MainWindowVm : WindowVm
         if (filePath is null) return;
 
         _currentFilePath = filePath;
-            TextContent = File.ReadAllText(_currentFilePath);
-        }
+        TextContent = File.ReadAllText(_currentFilePath);
     }
 
     private void SaveFile()
@@ -158,9 +157,9 @@ public class MainWindowVm : WindowVm
         if (filePath is null) return;
 
         _currentFilePath = filePath;
-            File.WriteAllText(_currentFilePath, TextContent);
-            FileSizeInBytes = GetFileSizeInBytes();
-        }
+        File.WriteAllText(_currentFilePath, TextContent);
+        FileSizeInBytes = GetFileSizeInBytes();
+    }
 
     private void SwitchTheme()
     {
