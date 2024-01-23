@@ -75,12 +75,13 @@ public class MainWindowVm : ObservableObject
 
     private int GetNumberOfVisibleCharacters()
     {
-        if (NumberOfNewLines == 0)
+        if (string.IsNullOrEmpty(TextContent))
         {
-            return TextContent?.Length - NumberOfNewLines ?? 0;
+            return 0;
         }
 
-        return TextContent!.Length - NumberOfNewLines - 1;
+        const string visibleCharactersRegexStr = @"[^\p{Cc}^\p{Cn}^\p{Cs}]";
+        return Regex.Matches(TextContent, visibleCharactersRegexStr).Count;
     }
 
     private int NumberOfNewLines => Regex.Matches(TextContent ?? string.Empty, Environment.NewLine).Count;
@@ -97,7 +98,8 @@ public class MainWindowVm : ObservableObject
 
     private int GetNumberOfLines()
     {
-        if (NumberOfNewLines == 0 && NumberOfCharacters == 0)
+        if (string.IsNullOrEmpty(TextContent)
+            || (NumberOfNewLines == 0 && NumberOfCharacters == 0))
         {
             return 0;
         }
