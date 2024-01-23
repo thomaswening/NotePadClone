@@ -13,7 +13,7 @@ using Microsoft.Win32;
 using WpfEssentials.Base;
 
 namespace NotePadClone.ViewModels;
-public class MainWindowVm : ObservableObject
+public class MainWindowVm : WindowVm
 {
     private string? _textContent;
     private string? _currentFilePath;
@@ -97,7 +97,7 @@ public class MainWindowVm : ObservableObject
 
     private int NumberOfNewLines => Regex.Matches(TextContent ?? string.Empty, Environment.NewLine).Count;
 
-    private int GetFileSizeInBytes() 
+    private int GetFileSizeInBytes()
     {
         if (string.IsNullOrEmpty(_currentFilePath))
         {
