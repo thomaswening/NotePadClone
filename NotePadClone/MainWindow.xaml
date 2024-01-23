@@ -20,12 +20,6 @@
         <viewModels:MainWindowVm />
     </Window.DataContext>
 
-    <Window.Resources>
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Margin" Value="5 0" />
-        </Style>
-    </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -78,20 +72,47 @@
                    VerticalAlignment="Center"
                    Margin="5">
 
-            <TextBlock Text="File Size: " />
-            <TextBlock Text="{Binding FileSizeInBytes}" />
+            <DockPanel.Resources>
+                <Style x:Key="Left" 
+                       TargetType="{x:Type TextBlock}"
+                       BasedOn="{StaticResource MaterialDesignTextBlock}">
+                    
+                    <Setter Property="Margin"
+                            Value="5 0 0 0" />                    
+                </Style>
 
-            <TextBlock Text="Characters: " />
-            <TextBlock Text="{Binding NumberOfCharacters}" />
+                <Style x:Key="Right" 
+                       TargetType="{x:Type TextBlock}"
+                       BasedOn="{StaticResource MaterialDesignTextBlock}">
 
-            <TextBlock Text="Lines: " />
-            <TextBlock Text="{Binding NumberOfLines}" />
+                    <Setter Property="Margin"
+                            Value="0 0 5 0" />
+                </Style>
+            </DockPanel.Resources>
+            
+            <TextBlock Style="{StaticResource Left}" 
+                       Text="File Size: " />
+            
+            <TextBlock Style="{StaticResource Right}"
+                       Text="{Binding FileSizeInBytes}" />
 
-            <TextBlock Text="Dark Mode? " />
+            <TextBlock Style="{StaticResource Left}"
+                       Text="Characters: " />
+
+            <TextBlock Style="{StaticResource Right}"
+                       Text="{Binding NumberOfCharacters}" />
+
+            <TextBlock Style="{StaticResource Left}"
+                       Text="Lines: " />
+
+            <TextBlock Style="{StaticResource Right}"
+                       Text="{Binding NumberOfLines}" />
+
+            <TextBlock Style="{StaticResource Left}"
+                       Text="Dark Mode " />
 
             <ToggleButton Margin="5 0"
                           IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" />
         </DockPanel>
-
     </Grid>
 </Window>
