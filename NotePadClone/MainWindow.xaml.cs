@@ -29,12 +29,7 @@ namespace NotePadClone
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var viewModel = (MainWindowVm)DataContext;
-
-            viewModel.CloseWindowRequestedEvent += (s, e) => Close();
-            viewModel.MinimizeWindowRequestedEvent += (s, e) => this.Minimize();
-            viewModel.MaximizeWindowRequestedEvent += (s, e) => this.Maximize();
-            viewModel.RestoreWindowRequestedEvent += (s, e) => this.Restore();
+            this.SubscribeToWindowEvents((WindowVm)DataContext);
         }
     }
 }
