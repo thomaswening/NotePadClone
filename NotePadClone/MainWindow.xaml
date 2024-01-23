@@ -14,7 +14,8 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Style="{StaticResource MaterialDesignWindowChrome}">
+        Style="{StaticResource MaterialDesignWindowChrome}"
+        Loaded="OnLoaded">
 
     <Window.DataContext>
         <viewModels:MainWindowVm />
