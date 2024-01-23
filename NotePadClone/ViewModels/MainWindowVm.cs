@@ -49,7 +49,7 @@ public class MainWindowVm : ObservableObject
         set => SetField(ref _fileSizeInBytes, value);
     }
 
-    public ICommand NewFileCommand { get; }
+    public ICommand NewDocumentCommand { get; }
     public ICommand OpenFileCommand { get; }
     public ICommand SaveFileCommand { get; }
     public ICommand SaveAsFileCommand { get; }
@@ -57,7 +57,7 @@ public class MainWindowVm : ObservableObject
 
     public MainWindowVm()
     {
-        NewFileCommand = new DelegateCommand(_ => NewFile());
+        NewDocumentCommand = new DelegateCommand(_ => NewDocument());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
@@ -105,7 +105,7 @@ public class MainWindowVm : ObservableObject
         return NumberOfNewLines + 1;
     }
 
-    private void NewFile()
+    private void NewDocument()
     {
         TextContent = string.Empty;
         _currentFilePath = null;
