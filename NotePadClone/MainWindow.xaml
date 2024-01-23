@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:NotePadClone"
         xmlns:viewModels="clr-namespace:NotePadClone.ViewModels"
+        xmlns:valueConverter="clr-namespace:NotePadClone.ValueConverters"
         mc:Ignorable="d"
         Title="NotePad Clone"
         Height="450"
@@ -20,6 +21,11 @@
     <Window.DataContext>
         <viewModels:MainWindowVm />
     </Window.DataContext>
+
+    <Window.Resources>
+        <valueConverter:FileSizeConverter x:Key="FileSizeConverter" />
+        <valueConverter:IntToStringConverter x:Key="IntToStringConverter" />
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -91,13 +97,13 @@
                        Text="File Size: " />
             
             <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding FileSizeInBytes}" />
+                       Text="{Binding FileSizeInBytes, Converter={StaticResource FileSizeConverter}}" />
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Characters: " />
 
             <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding NumberOfCharacters}" />
+                       Text="{Binding NumberOfCharacters, Converter={StaticResource IntToStringConverter}, ConverterParameter=N0}" />
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Lines: " />
