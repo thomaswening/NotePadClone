@@ -20,6 +20,13 @@
         <viewModels:MainWindowVm />
     </Window.DataContext>
 
+    <Window.Resources>
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="5 0" />
+        </Style>
+    </Window.Resources>
+
     <DockPanel>
         <!-- Menu Bar -->
         <Menu DockPanel.Dock="Top">
