@@ -12,8 +12,8 @@ using Microsoft.Win32;
 
 using WpfEssentials.Base;
 
-namespace NotePadClone;
-internal class NotePadViewModel : ObservableObject
+namespace NotePadClone.ViewModels;
+internal class MainWindowVm : ObservableObject
 {
     private string? _textContent;
     private string? _currentFilePath;
@@ -55,7 +55,7 @@ internal class NotePadViewModel : ObservableObject
     public ICommand SaveAsFileCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public NotePadViewModel()
+    public MainWindowVm()
     {
         NewFileCommand = new DelegateCommand(_ => NewFile());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());

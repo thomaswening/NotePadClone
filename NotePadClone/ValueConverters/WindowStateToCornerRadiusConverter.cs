@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace NotePadClone;
+namespace NotePadClone.ValueConverters;
 
 /// <summary>
 /// Converts a <see cref="WindowState"/> to a <see cref="CornerRadius"/>.

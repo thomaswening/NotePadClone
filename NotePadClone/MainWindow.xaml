@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:NotePadClone"
+        xmlns:viewModels="clr-namespace:NotePadClone.ViewModels"
         mc:Ignorable="d"
         Title="NotePad Clone"
         Height="450"
@@ -17,7 +18,7 @@
         Style="{StaticResource MaterialDesignWindowChrome}">
 
     <Window.DataContext>
-        <local:NotePadViewModel />
+        <viewModels:MainWindowVm />
     </Window.DataContext>
 
     <DockPanel>
