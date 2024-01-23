@@ -66,36 +66,27 @@
         </Menu>
 
         <!-- Status Bar -->
-        <StatusBar DockPanel.Dock="Bottom"
-                   Background="{StaticResource MaterialDesignDarkBackground}"
-                   Foreground="{StaticResource MaterialDesignDarkForeground}"
+        <DockPanel DockPanel.Dock="Bottom"
                    HorizontalAlignment="Right"
-                   Padding="15 5">
+                   Margin="5">
 
-            <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="File Size: "
-                               FontWeight="Bold" />
+                <TextBlock Text="File Size: " />
                     <TextBlock Text="{Binding FileSizeInBytes}" />
                 </StackPanel>
-            </StatusBarItem>
 
-            <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Characters: "
-                               FontWeight="Bold" />
+                <TextBlock Text="Characters: " />
                     <TextBlock Text="{Binding NumberOfCharacters}" />
                 </StackPanel>
-            </StatusBarItem>
 
-            <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Lines: "
-                               FontWeight="Bold" />
+                <TextBlock Text="Lines: " />
                     <TextBlock Text="{Binding NumberOfLines}" />
                 </StackPanel>
-            </StatusBarItem>
-        </StatusBar>
+
+
+        </DockPanel>
 
         <!-- Text Editor Area -->
         <TextBox AcceptsReturn="True"
