@@ -22,18 +22,15 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />     <!-- Menu Bar Row -->
+            <RowDefinition Height="*" />        <!-- Text Editor Area Row -->
+            <RowDefinition Height="Auto" />     <!-- Status Bar Row -->
         </Grid.RowDefinitions>
+
         <!-- Menu Bar -->
-        <Menu Grid.Row="0" 
-              DockPanel.Dock="Top" 
-              materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
-            
-            <!-- File Menu -->
-            <MenuItem Header="_File">                
-                
+        <Menu Grid.Row="0"
+              materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
+            <MenuItem Header="_File">
                 <MenuItem Command="{Binding NewDocumentCommand}"
                           Header="_New" />
                 
@@ -50,12 +47,11 @@
                 <MenuItem Command="{Binding CloseCommand}"
                           Header="_Exit" />
             </MenuItem>
-
-            <!-- Edit and other menus -->
+            <!-- Additional Menu Items Here -->
         </Menu>
 
         <!-- Text Editor Area -->
-        <TextBox Grid.Row="1" 
+        <TextBox Grid.Row="1"
                  AcceptsReturn="True"
                  AcceptsTab="True"
                  VerticalScrollBarVisibility="Auto"
@@ -104,13 +100,13 @@
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Lines: " />
-
+            
             <TextBlock Style="{StaticResource Right}"
                        Text="{Binding NumberOfLines}" />
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Dark Mode " />
-
+            
             <ToggleButton Margin="5 0"
                           IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" />
         </DockPanel>
