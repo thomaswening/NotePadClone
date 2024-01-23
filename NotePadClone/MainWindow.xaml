@@ -45,7 +45,7 @@
                           Header="Save _As..." />
                 
                 <Separator />
-                <MenuItem Command="{Binding CloseCommand}"
+                <MenuItem Command="{Binding CloseWindowCommand}"
                           Header="_Exit" />
             </MenuItem>
             <!-- Additional Menu Items Here -->
