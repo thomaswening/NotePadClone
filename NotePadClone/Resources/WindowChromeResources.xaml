@@ -6,9 +6,43 @@
 
     <valueConverters:WindowStateToCornerRadiusConverter x:Key="WindowStateToCornerRadiusConverter" />
 
+    <!-- Maximize, Restore, Minimize Buttons -->
+    <Style x:Key="WindowControlButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource MaterialDesignFlatButton}">
+
+        <Setter Property="Foreground"
+                Value="{Binding Foreground, RelativeSource={RelativeSource Self}}" />
+        
+        <Setter Property="Background"
+                Value="{Binding Background, RelativeSource={RelativeSource Self}}" />
+        
+        <Setter Property="BorderBrush"
+                Value="{Binding BorderBrush, RelativeSource={RelativeSource Self}}" />
+
+        <Setter Property="BorderThickness"
+                Value="0" />
+        
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+                Value="True" />
+        
+        <Setter Property="IsTabStop"
+                Value="False" />
+        
+        <Setter Property="Padding"
+                Value="0" />
+        
+        <Setter Property="Height"
+                Value="32" />
+        
+        <Setter Property="Width"
+                Value="32" />
+    </Style>
+
+    <!-- Window Style -->
     <Style x:Key="MaterialDesignWindowChrome"
            TargetType="{x:Type Window}">
-
+        
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome ResizeBorderThickness="5"
@@ -16,25 +50,24 @@
                               GlassFrameThickness="1"
                               UseAeroCaptionButtons="False"
                               CornerRadius="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}" />
-            </Setter.Value>            
+            </Setter.Value>
         </Setter>
-        
+
         <Setter Property="Background"
                 Value="{DynamicResource MaterialDesignPaper}" />
-
+        
         <Setter Property="BorderBrush"
                 Value="{DynamicResource MaterialDesignDivider}" />
-
+        
         <Setter Property="BorderThickness"
                 Value="1" />
-
+        
         <Setter Property="Foreground"
                 Value="{DynamicResource MaterialDesignBody}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -44,7 +77,8 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            
+
+                            <!-- Window Header -->
                             <Grid Grid.Row="0">
                                 <DockPanel>
                                     <DockPanel.Style>
@@ -52,14 +86,11 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
                                                              Value="Normal">
-
                                                     <Setter Property="Margin"
-                                                            Value="0 0 0 0" />
+                                                            Value="0" />
                                                 </DataTrigger>
-
                                                 <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
                                                              Value="Maximized">
-
                                                     <Setter Property="Margin"
                                                             Value="5 5 5 0" />
                                                 </DataTrigger>
@@ -67,10 +98,10 @@
                                         </Style>
                                     </DockPanel.Style>
 
+                                    <!-- Window Control Buttons -->
                                     <Button x:Name="PART_CloseButton"
                                             DockPanel.Dock="Right"
                                             Style="{StaticResource MaterialDesignFlatButton}"
-                                            Margin="0 0 0 0"
                                             Command="{Binding Path=CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                             ToolTip="Close"
                                             FontFamily="{StaticResource MaterialDesignFont}"
@@ -79,120 +110,42 @@
                                             Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="0"
-                                            WindowChrome.IsHitTestVisibleInChrome="True" 
+                                            WindowChrome.IsHitTestVisibleInChrome="True"
                                             IsTabStop="False"
                                             Padding="0"
                                             Height="32"
                                             Width="32">
-
                                         <materialDesign:PackIcon Kind="WindowClose" />
-                                    </Button>
+                                    </Button>                                    
 
                                     <Button x:Name="PART_MaximizeButton"
                                             DockPanel.Dock="Right"
                                             Margin="0 0 4 0"
                                             Command="{Binding Path=MaximizeCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                             ToolTip="Maximize"
-                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                            FontSize="16"
-                                            Foreground="{TemplateBinding Foreground}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="0"
-                                            WindowChrome.IsHitTestVisibleInChrome="True"
-                                            IsTabStop="False"
-                                            Padding="0"
-                                            Height="32"
-                                            Width="32">
-
+                                            Style="{StaticResource WindowControlButtonStyle}">
                                         <materialDesign:PackIcon Kind="WindowMaximize" />
-                                        
-                                        <Button.Style>
-                                            <Style TargetType="{x:Type Button}"
-                                                   BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                                
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Normal">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Visible" />
-                                                    </DataTrigger>
-
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Maximized">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
                                     </Button>
-
+                                    
                                     <Button x:Name="PART_RestoreButton"
                                             DockPanel.Dock="Right"
                                             Margin="0 0 4 0"
                                             Command="{Binding Path=RestoreCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                             ToolTip="Restore"
-                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                            FontSize="16"
-                                            Foreground="{TemplateBinding Foreground}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="0"
-                                            WindowChrome.IsHitTestVisibleInChrome="True"
-                                            IsTabStop="False"
-                                            Padding="0"
-                                            Height="32"
-                                            Width="32">
-
+                                            Style="{StaticResource WindowControlButtonStyle}">
                                         <materialDesign:PackIcon Kind="WindowRestore" />
-
-                                        <Button.Style>
-                                            <Style TargetType="{x:Type Button}"
-                                                   BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                                
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Normal">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Collapsed" />
-                                                    </DataTrigger>
-
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Maximized">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
                                     </Button>
-
+                                    
                                     <Button x:Name="PART_MinimizeButton"
                                             DockPanel.Dock="Right"
-                                            Style="{StaticResource MaterialDesignFlatButton}"
                                             Margin="0 0 4 0"
                                             Command="{Binding Path=MinimizeCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                             ToolTip="Minimize"
-                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                            FontSize="16"
-                                            Foreground="{TemplateBinding Foreground}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="0"
-                                            WindowChrome.IsHitTestVisibleInChrome="True"
-                                            IsTabStop="False"
-                                            Padding="0"
-                                            Height="32"
-                                            Width="32">
-
+                                            Style="{StaticResource WindowControlButtonStyle}">
                                         <materialDesign:PackIcon Kind="WindowMinimize" />
                                     </Button>
 
+                                    <!-- Title -->
                                     <TextBlock x:Name="PART_Title"
                                                Text="{TemplateBinding Title}"
                                                Foreground="{TemplateBinding Foreground}"
@@ -204,12 +157,12 @@
                                 </DockPanel>
                             </Grid>
 
+                            <!-- Main Content -->
                             <ContentPresenter Grid.Row="1" />
-                            
-                        </Grid>                        
-                    </Border>                    
-                </ControlTemplate>                
-            </Setter.Value>            
-        </Setter>        
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
