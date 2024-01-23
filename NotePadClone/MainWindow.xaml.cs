@@ -36,22 +36,22 @@ namespace NotePadClone
 
         private static void Minimize()
         {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            Application.Current.MainWindow!.WindowState = WindowState.Minimized;
         }
 
         private static void Maximize()
         {
-            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            Application.Current.MainWindow!.WindowState = WindowState.Maximized;
         }
 
         private static void Restore()
         {
-            Application.Current.MainWindow.WindowState = WindowState.Normal;
+            Application.Current.MainWindow!.WindowState = WindowState.Normal;
         }
 
-        private static new void Close()
+        private new static void Close()
         {
-            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow!.Close();
         }
     }
 }
