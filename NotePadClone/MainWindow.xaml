@@ -41,7 +41,7 @@
             <MenuItem Header="_File"
                       Height="30">                
                 
-                <MenuItem Command="{Binding NewFileCommand}"
+                <MenuItem Command="{Binding NewDocumentCommand}"
                           Header="_New"
                           Height="30" />
                 
