@@ -21,15 +21,20 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <Style TargetType="{x:Type StackPanel}">
-            <Setter Property="Orientation" Value="Horizontal" />
+        <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="5 0" />
         </Style>
     </Window.Resources>
 
-    <DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <!-- Menu Bar -->
-        <Menu DockPanel.Dock="Top" 
+        <Menu Grid.Row="0" 
+              DockPanel.Dock="Top" 
               materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
             
             <!-- File Menu -->
@@ -55,35 +60,9 @@
             <!-- Edit and other menus -->
         </Menu>
 
-        <!-- Status Bar -->
-        <DockPanel DockPanel.Dock="Bottom"
-                   HorizontalAlignment="Right"
-                   Margin="5">
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="File Size: " />
-                <TextBlock Text="{Binding FileSizeInBytes}" />
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Characters: " />
-                <TextBlock Text="{Binding NumberOfCharacters}" />
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Lines: " />
-                <TextBlock Text="{Binding NumberOfLines}" />
-            </StackPanel>
-
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Dark Mode? " />
-                <ToggleButton Margin="8,0" IsChecked="{Binding IsDarkTheme}" />
-            </StackPanel>
-        </DockPanel>
-
         <!-- Text Editor Area -->
-        <TextBox AcceptsReturn="True"
+        <TextBox Grid.Row="1" 
+                 AcceptsReturn="True"
                  AcceptsTab="True"
                  VerticalScrollBarVisibility="Auto"
                  HorizontalScrollBarVisibility="Auto"
@@ -91,7 +70,28 @@
                  FontFamily="Consolas"
                  Padding="15"
                  Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                 Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />        
-        
-    </DockPanel>
+                 Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!-- Status Bar -->
+        <DockPanel Grid.Row="2"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   Margin="5">
+
+            <TextBlock Text="File Size: " />
+            <TextBlock Text="{Binding FileSizeInBytes}" />
+
+            <TextBlock Text="Characters: " />
+            <TextBlock Text="{Binding NumberOfCharacters}" />
+
+            <TextBlock Text="Lines: " />
+            <TextBlock Text="{Binding NumberOfLines}" />
+
+            <TextBlock Text="Dark Mode? " />
+
+            <ToggleButton Margin="5 0"
+                          IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" />
+        </DockPanel>
+
+    </Grid>
 </Window>
