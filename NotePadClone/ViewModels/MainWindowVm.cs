@@ -22,6 +22,9 @@ public class MainWindowVm : WindowVm
     private int _fileSizeInBytes;
     private bool _isDarkTheme = true;
 
+    public Func<string?>? OpenFileFunc { get; set; }
+    public Func<string?>? SaveFileFunc { get; set; }
+
     public string? TextContent
     {
         get => _textContent;
@@ -126,10 +129,11 @@ public class MainWindowVm : WindowVm
 
     private void OpenFile()
     {
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        if (openFileDialog.ShowDialog() == true)
-        {
-            _currentFilePath = openFileDialog.FileName;
+        string? filePath = OpenFileFunc?.Invoke();
+
+        if (filePath is null) return;
+
+        _currentFilePath = filePath;
             TextContent = File.ReadAllText(_currentFilePath);
         }
     }
@@ -149,14 +153,14 @@ public class MainWindowVm : WindowVm
 
     private void SaveAsFile()
     {
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        if (saveFileDialog.ShowDialog() == true)
-        {
-            _currentFilePath = saveFileDialog.FileName;
+        string? filePath = SaveFileFunc?.Invoke();
+
+        if (filePath is null) return;
+
+        _currentFilePath = filePath;
             File.WriteAllText(_currentFilePath, TextContent);
             FileSizeInBytes = GetFileSizeInBytes();
         }
-    }
 
     private void SwitchTheme()
     {
@@ -171,5 +175,4 @@ public class MainWindowVm : WindowVm
     }
 
     private bool CanSaveFile() => !string.IsNullOrEmpty(TextContent);
-    private static void CloseApplication() => Application.Current.Shutdown();
 }
