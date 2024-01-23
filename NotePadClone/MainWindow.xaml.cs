@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using NotePadClone.Utilities;
+using NotePadClone.ViewModels;
+
 using WpfEssentials.Base;
 
 namespace NotePadClone
@@ -22,36 +25,16 @@ namespace NotePadClone
         public MainWindow()
         {
             InitializeComponent();
-
-            MinimizeCommand = new DelegateCommand(_ => Minimize());
-            MaximizeCommand = new DelegateCommand(_ => Maximize());
-            RestoreCommand = new DelegateCommand(_ => Restore());
-            CloseCommand = new DelegateCommand(_ => Close());
         }
 
-        public DelegateCommand MinimizeCommand { get; private set; }
-        public DelegateCommand MaximizeCommand { get; private set; }
-        public DelegateCommand RestoreCommand { get; private set; }
-        public DelegateCommand CloseCommand { get; private set; }
-
-        private static void Minimize()
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow!.WindowState = WindowState.Minimized;
-        }
+            var viewModel = (MainWindowVm)DataContext;
 
-        private static void Maximize()
-        {
-            Application.Current.MainWindow!.WindowState = WindowState.Maximized;
-        }
-
-        private static void Restore()
-        {
-            Application.Current.MainWindow!.WindowState = WindowState.Normal;
-        }
-
-        private new static void Close()
-        {
-            Application.Current.MainWindow!.Close();
+            viewModel.CloseWindowRequestedEvent += (s, e) => Close();
+            viewModel.MinimizeWindowRequestedEvent += (s, e) => this.Minimize();
+            viewModel.MaximizeWindowRequestedEvent += (s, e) => this.Maximize();
+            viewModel.RestoreWindowRequestedEvent += (s, e) => this.Restore();
         }
     }
 }
