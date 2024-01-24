@@ -25,6 +25,8 @@ public class MainWindowVm : WindowVm
     public Func<string?>? OpenFileFunc { get; set; }
     public Func<string?>? SaveFileFunc { get; set; }
 
+    public Action? SwitchThemeAction { get; set; }
+
     public string? TextContent
     {
         get => _textContent;
@@ -61,7 +63,7 @@ public class MainWindowVm : WindowVm
         set
         {
             if (!SetField(ref _isDarkTheme, value)) return;
-            SwitchTheme();
+            SwitchThemeAction?.Invoke();
         }
     }
 
@@ -159,19 +161,7 @@ public class MainWindowVm : WindowVm
         _currentFilePath = filePath;
         File.WriteAllText(_currentFilePath, TextContent);
         FileSizeInBytes = GetFileSizeInBytes();
-    }
-
-    private void SwitchTheme()
-    {
-        var paletteHelper = new PaletteHelper();
-        var theme = paletteHelper.GetTheme();
-        var baseTheme = IsDarkTheme
-            ? (IBaseTheme)new MaterialDesignDarkTheme()
-            : (IBaseTheme)new MaterialDesignLightTheme();
-
-        theme.SetBaseTheme(baseTheme);
-        paletteHelper.SetTheme(theme);
-    }
+    }    
 
     private bool CanSaveFile() => !string.IsNullOrEmpty(TextContent);
 }
