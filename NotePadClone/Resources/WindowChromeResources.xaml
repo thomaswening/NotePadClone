@@ -13,6 +13,55 @@
                       Direction="315"
                       ShadowDepth="1"
                       Opacity=".7" />
+    
+    <!--Inner Border Style-->
+    <Style TargetType="{x:Type Border}"
+           x:Key="InnerBorderStyle">
+
+        <Setter Property="Background"
+                Value="{DynamicResource MaterialDesignPaper}" />
+
+        <Setter Property="CornerRadius"
+                Value="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}" />
+
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource MaterialDesignDivider}" />
+
+        <Setter Property="BorderThickness"
+                Value="1" />
+
+        <Setter Property="Margin"
+                Value="10" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
+                         Value="Maximized">
+
+                <Setter Property="BorderThickness"
+                        Value="0" />
+
+                <Setter Property="Margin"
+                        Value="0" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>    
+
+    <!--DockPanel Style-->
+    <Style TargetType="{x:Type DockPanel}"
+           x:Key="DockPanelStyle">
+
+        <Setter Property="Margin"
+                Value="0" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
+                         Value="Maximized">
+
+                <Setter Property="Margin"
+                        Value="5 5 5 0" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
     <!-- Maximize, Restore, Minimize Buttons -->
     <Style x:Key="WindowControlButtonStyle"
@@ -53,13 +102,112 @@
                 Value="Right" />
     </Style>
 
+    <!--Close Button Style-->
+    <Style TargetType="{x:Type Button}"
+           x:Key="CloseButtonStyle"
+           BasedOn="{StaticResource WindowControlButtonStyle}">
+
+        <Setter Property="Command"
+                Value="{Binding Path=DataContext.CloseWindowCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+
+        <Setter Property="ToolTip"
+                Value="Close" />
+
+        <Setter Property="Margin"
+                Value="0" />
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Kind="WindowClose" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Maximize Button Style-->
+    <Style TargetType="{x:Type Button}"
+           x:Key="MaximizeButtonStyle"
+           BasedOn="{StaticResource WindowControlButtonStyle}">
+
+        <Setter Property="Command"
+                Value="{Binding Path=DataContext.MaximizeWindowCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+
+        <Setter Property="ToolTip"
+                Value="Maximize" />
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Kind="WindowMaximize" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Visibility"
+                Value="Visible" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
+                         Value="Maximized">
+
+                <Setter Property="Visibility"
+                        Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Restore Button Style-->
+    <Style TargetType="{x:Type Button}"
+           x:Key="RestoreButtonStyle"
+           BasedOn="{StaticResource WindowControlButtonStyle}">
+
+        <Setter Property="Command"
+                Value="{Binding Path=DataContext.RestoreWindowCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+
+        <Setter Property="ToolTip"
+                Value="Restore" />
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Kind="WindowRestore" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Visibility"
+                Value="Collapsed" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
+                         Value="Maximized">
+
+                <Setter Property="Visibility"
+                        Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Minimize Button Style-->
+    <Style TargetType="{x:Type Button}"
+           x:Key="MinimizeButtonStyle"
+           BasedOn="{StaticResource WindowControlButtonStyle}">
+
+        <Setter Property="Command"
+                Value="{Binding Path=DataContext.MinimizeWindowCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+
+        <Setter Property="ToolTip"
+                Value="Minimize" />
+
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Kind="WindowMinimize" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Window Style -->
     <Style x:Key="MaterialDesignWindowChrome"
            TargetType="{x:Type Window}">
         
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
-                <WindowChrome ResizeBorderThickness="5"
+                <WindowChrome ResizeBorderThickness="10"
                               CaptionHeight="32"
                               GlassFrameThickness="1"
                               UseAeroCaptionButtons="False" />
@@ -75,158 +223,47 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border Effect="{StaticResource WindowShadowEffect}"> 
-                        
-                    <Border Background="{DynamicResource MaterialDesignPaper}"
-                            CornerRadius="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}">
-                        
-                            <Border.Style>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="BorderBrush"
-                                            Value="{DynamicResource MaterialDesignDivider}" />
+                    <Border Effect="{StaticResource WindowShadowEffect}">
+                        <Border Style="{StaticResource InnerBorderStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
 
-                                    <Setter Property="BorderThickness"
-                                            Value="1" />
+                                <!-- Window Header -->
+                                <Grid Grid.Row="0">
+                                    <DockPanel Style="{StaticResource DockPanelStyle}">
 
-                                    <Setter Property="Margin"
-                                            Value="10" />
+                                        <!-- Window Control Buttons -->
+                                        <Button x:Name="PART_CloseButton"
+                                                Style="{StaticResource CloseButtonStyle}" />
 
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                     Value="Maximized">
+                                        <Button x:Name="PART_MaximizeButton"
+                                                Style="{StaticResource MaximizeButtonStyle}" />
 
-                                            <Setter Property="BorderThickness"
-                                                    Value="0" />
+                                        <Button x:Name="PART_RestoreButton"
+                                                Style="{StaticResource RestoreButtonStyle}" />
 
-                                            <Setter Property="Margin"
-                                                    Value="0" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
+                                        <Button x:Name="PART_MinimizeButton"
+                                                Style="{StaticResource MinimizeButtonStyle}" />
 
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                                        <!-- Title -->
+                                        <TextBlock x:Name="PART_Title"
+                                                   Text="{TemplateBinding Title}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   FontFamily="{StaticResource MaterialDesignFont}"
+                                                   FontWeight="Light"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Margin="10 0 0 0" />
+                                    </DockPanel>
+                                </Grid>
 
-                            <!-- Window Header -->
-                            <Grid Grid.Row="0">
-                                <DockPanel>
-                                    <DockPanel.Style>
-                                        <Style TargetType="{x:Type DockPanel}">
-                                            <Style.Triggers>
-                                                
-                                                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                             Value="Normal">
-                                                    
-                                                    <Setter Property="Margin"
-                                                            Value="0" />
-                                                </DataTrigger>
-                                                
-                                                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                             Value="Maximized">
-                                                    
-                                                    <Setter Property="Margin"
-                                                            Value="5 5 5 0" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DockPanel.Style>
-
-                                    <!-- Window Control Buttons -->
-                                    <Button x:Name="PART_CloseButton"
-                                            Command="{Binding Path=DataContext.CloseWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ToolTip="Close"
-                                            Margin="0"
-                                            Style="{StaticResource WindowControlButtonStyle}">
-                                        
-                                        <materialDesign:PackIcon Kind="WindowClose" />
-                                    </Button>                                    
-
-                                    <Button x:Name="PART_MaximizeButton"
-                                            Command="{Binding Path=DataContext.MaximizeWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ToolTip="Maximize">
-                                        
-                                        <Button.Style>
-                                            <Style TargetType="{x:Type Button}"
-                                                   BasedOn="{StaticResource WindowControlButtonStyle}">
-                                                
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Normal">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Visible" />
-                                                    </DataTrigger>
-
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Maximized">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                        
-                                        <materialDesign:PackIcon Kind="WindowMaximize" />
-                                    </Button>
-                                    
-                                    <Button x:Name="PART_RestoreButton"
-                                            Command="{Binding Path=DataContext.RestoreWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ToolTip="Restore">
-
-                                        <Button.Style>
-                                            <Style TargetType="{x:Type Button}"
-                                                   BasedOn="{StaticResource WindowControlButtonStyle}">
-
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Normal">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Collapsed" />
-                                                    </DataTrigger>
-
-                                                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                 Value="Maximized">
-
-                                                        <Setter Property="Visibility"
-                                                                Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-
-                                        <materialDesign:PackIcon Kind="WindowRestore" />
-                                    </Button>
-                                    
-                                    <Button x:Name="PART_MinimizeButton"
-                                            Command="{Binding Path=DataContext.MinimizeWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ToolTip="Minimize"
-                                            Style="{StaticResource WindowControlButtonStyle}">
-                                        
-                                        <materialDesign:PackIcon Kind="WindowMinimize" />
-                                    </Button>
-
-                                    <!-- Title -->
-                                    <TextBlock x:Name="PART_Title"
-                                               Text="{TemplateBinding Title}"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               FontFamily="{StaticResource MaterialDesignFont}"
-                                               FontWeight="Light"
-                                               FontSize="12"
-                                               VerticalAlignment="Center"
-                                               Margin="10 0 0 0" />
-                                </DockPanel>
+                                <!-- Main Content -->
+                                <ContentPresenter Grid.Row="1" />
                             </Grid>
-
-                            <!-- Main Content -->
-                            <ContentPresenter Grid.Row="1" />
-                        </Grid>
-                    </Border>
+                        </Border>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
