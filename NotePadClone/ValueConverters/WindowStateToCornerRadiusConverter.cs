@@ -13,20 +13,30 @@ namespace NotePadClone.ValueConverters;
 /// </summary>
 internal class WindowStateToCornerRadiusConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         if (value is not WindowState state)
-            throw new ArgumentException("The value must be of type WindowState", nameof(value));
+            throw new ArgumentException("The value must be of type WindowState.", nameof(value));
 
-        if (parameter is not null and double)
-            throw new ArgumentException("The parameter must be of type double", nameof(parameter));
+        double radius = -1;
+        if (parameter is not null)
+        {
+            if (parameter is not string) 
+                throw new ArgumentException("The parameter must be a string.", nameof(parameter));
 
-        double radius = parameter is double d ? d : 25;            
+            if (!double.TryParse(parameter.ToString(), out radius))
+                throw new InvalidOperationException($"Could not parse parameter to double. Parameter: {parameter}");
+
+            if (radius < 0)
+                throw new InvalidOperationException($"Corner radius must be positive. Parameter: {parameter}");
+        }
+
+        if (radius < 0) radius = 10;
 
         return state == WindowState.Maximized ? new CornerRadius(0) : new CornerRadius(radius);
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
         throw new NotImplementedException();
     }
