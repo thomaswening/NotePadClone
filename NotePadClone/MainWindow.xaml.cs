@@ -38,24 +38,12 @@ namespace NotePadClone
             var vm = (MainWindowVm)DataContext;
             vm.OpenFileFunc = () => OpenFileDialog(new OpenFileDialog());
             vm.SaveFileFunc = () => OpenFileDialog(new SaveFileDialog());
-            vm.SwitchThemeAction = () => SwitchTheme(vm);
+            vm.SwitchThemeAction = () => this.SwitchWindowTheme(vm);
         }
 
         private string? OpenFileDialog(FileDialog dialog)
         {
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
-        private void SwitchTheme(MainWindowVm viewModel)
-        {
-            var paletteHelper = new PaletteHelper();
-            var theme = paletteHelper.GetTheme();
-            var baseTheme = viewModel.IsDarkTheme
-                ? (IBaseTheme)new MaterialDesignDarkTheme()
-                : (IBaseTheme)new MaterialDesignLightTheme();
-
-            theme.SetBaseTheme(baseTheme);
-            paletteHelper.SetTheme(theme);
-        }
-
     }
 }
