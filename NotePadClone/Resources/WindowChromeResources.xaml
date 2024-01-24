@@ -54,29 +54,21 @@
                 <WindowChrome ResizeBorderThickness="5"
                               CaptionHeight="32"
                               GlassFrameThickness="1"
-                              UseAeroCaptionButtons="False"
-                              CornerRadius="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}" />
+                              UseAeroCaptionButtons="False" />
             </Setter.Value>
         </Setter>
 
-        <Setter Property="Background"
-                Value="{DynamicResource MaterialDesignPaper}" />
-        
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource MaterialDesignDivider}" />
-        
-        <Setter Property="BorderThickness"
-                Value="1" />
-        
-        <Setter Property="Foreground"
-                Value="{DynamicResource MaterialDesignBody}" />
+        <Setter Property="AllowsTransparency"
+                Value="True" />
+
+        <Setter Property="WindowStyle"
+                Value="None" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border Background="{DynamicResource MaterialDesignPaper}"
+                            CornerRadius="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}">
                         
                         <Grid>
                             <Grid.RowDefinitions>
