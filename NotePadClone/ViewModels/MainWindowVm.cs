@@ -25,7 +25,6 @@ public class MainWindowVm : WindowVm
     public Func<string?>? OpenFileFunc { get; set; }
     public Func<string?>? SaveFileFunc { get; set; }
 
-    public Action? SwitchThemeAction { get; set; }
 
     public string? TextContent
     {
@@ -57,15 +56,6 @@ public class MainWindowVm : WindowVm
         set => SetField(ref _fileSizeInBytes, value);
     }
 
-    public bool IsDarkTheme
-    {
-        get => _isDarkTheme;
-        set
-        {
-            if (!SetField(ref _isDarkTheme, value)) return;
-            SwitchThemeAction?.Invoke();
-        }
-    }
 
     public DelegateCommand NewDocumentCommand { get; }
     public DelegateCommand OpenFileCommand { get; }
