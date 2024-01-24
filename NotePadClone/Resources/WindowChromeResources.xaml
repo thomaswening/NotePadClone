@@ -6,6 +6,14 @@
 
     <valueConverters:WindowStateToCornerRadiusConverter x:Key="WindowStateToCornerRadiusConverter" />
 
+    <!-- Window Shadow Effect -->
+    <DropShadowEffect x:Key="WindowShadowEffect"
+                      Color="Black"
+                      BlurRadius="10"
+                      Direction="315"
+                      ShadowDepth="1"
+                      Opacity=".7" />
+
     <!-- Maximize, Restore, Minimize Buttons -->
     <Style x:Key="WindowControlButtonStyle"
            TargetType="{x:Type Button}"
@@ -67,9 +75,36 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Effect="{StaticResource WindowShadowEffect}"> 
+                        
                     <Border Background="{DynamicResource MaterialDesignPaper}"
                             CornerRadius="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToCornerRadiusConverter}}">
                         
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="BorderBrush"
+                                            Value="{DynamicResource MaterialDesignDivider}" />
+
+                                    <Setter Property="BorderThickness"
+                                            Value="1" />
+
+                                    <Setter Property="Margin"
+                                            Value="10" />
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource TemplatedParent}}"
+                                                     Value="Maximized">
+
+                                            <Setter Property="BorderThickness"
+                                                    Value="0" />
+
+                                            <Setter Property="Margin"
+                                                    Value="0" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -191,6 +226,7 @@
                             <!-- Main Content -->
                             <ContentPresenter Grid.Row="1" />
                         </Grid>
+                    </Border>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
