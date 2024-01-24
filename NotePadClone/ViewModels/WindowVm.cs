@@ -13,15 +13,31 @@ namespace NotePadClone.ViewModels;
 /// </summary>
 public class WindowVm : ObservableObject
 {
+    private bool _isDarkTheme = true;
+
     public event EventHandler? CloseWindowRequestedEvent;
     public event EventHandler? MinimizeWindowRequestedEvent;
     public event EventHandler? MaximizeWindowRequestedEvent;
     public event EventHandler? RestoreWindowRequestedEvent;
 
+    public Action? SwitchThemeAction { get; set; }
+
     public DelegateCommand MinimizeWindowCommand { get; }
     public DelegateCommand MaximizeWindowCommand { get; }
     public DelegateCommand RestoreWindowCommand { get; }
     public DelegateCommand CloseWindowCommand { get; }
+
+    public bool IsDarkTheme
+    {
+        get => _isDarkTheme;
+        set
+        {
+            if (!SetField(ref _isDarkTheme, value))
+                return;
+
+            SwitchThemeAction?.Invoke();
+        }
+    }
 
     public WindowVm()
     {
