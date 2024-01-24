@@ -34,32 +34,13 @@ namespace NotePadClone
             this.SubscribeToWindowEvents((WindowVm)DataContext);
 
             var vm = (MainWindowVm)DataContext;
-            vm.OpenFileFunc = ShowOpenFileDialog;
-            vm.SaveFileFunc = OpenSaveFileDialog;
+            vm.OpenFileFunc = () => OpenFileDialog(new OpenFileDialog());
+            vm.SaveFileFunc = () => OpenFileDialog(new SaveFileDialog());
         }
 
-        private string? OpenSaveFileDialog()
+        private string? OpenFileDialog(FileDialog dialog)
         {
-            var saveFileDialog = new SaveFileDialog();
-
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                return saveFileDialog.FileName;
-            }
-
-            return null;
-        }
-
-        private string? ShowOpenFileDialog()
-        {
-            var openFileDialog = new OpenFileDialog();
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                return openFileDialog.FileName;
-            }
-
-            return null;
+            return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
     }
 }
