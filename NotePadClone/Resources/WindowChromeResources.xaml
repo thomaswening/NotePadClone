@@ -5,6 +5,7 @@
                     xmlns:valueConverters="clr-namespace:NotePadClone.ValueConverters">
 
     <valueConverters:WindowStateToCornerRadiusConverter x:Key="WindowStateToCornerRadiusConverter" />
+    <valueConverters:BoolToBlackAndWhiteConverter x:Key="BoolToBlackAndWhiteConverter" />
 
     <!-- Window Shadow Effect -->
     <DropShadowEffect x:Key="WindowShadowEffect"
@@ -13,7 +14,7 @@
                       Direction="315"
                       ShadowDepth="1"
                       Opacity=".7" />
-    
+
     <!--Inner Border Style-->
     <Style TargetType="{x:Type Border}"
            x:Key="InnerBorderStyle">
@@ -68,12 +69,6 @@
            TargetType="{x:Type Button}"
            BasedOn="{StaticResource MaterialDesignFlatButton}">
 
-        <Setter Property="Foreground"
-                Value="{Binding Foreground, RelativeSource={RelativeSource Self}}" />
-        
-        <Setter Property="Background"
-                Value="{Binding Background, RelativeSource={RelativeSource Self}}" />
-        
         <Setter Property="BorderBrush"
                 Value="{Binding BorderBrush, RelativeSource={RelativeSource Self}}" />
 
@@ -100,6 +95,30 @@
 
         <Setter Property="DockPanel.Dock"
                 Value="Right" />
+
+        <Setter Property="Foreground"
+                Value="{StaticResource MaterialDesignDarkForeground}" />
+
+        <Setter Property="Background"
+                Value="{StaticResource MaterialDesignDarkBackground}" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DataContext.IsDarkTheme, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                         Value="False">
+
+                <Setter Property="Foreground"
+                        Value="{StaticResource MaterialDesignLightForeground}" />
+
+                <Setter Property="Background"
+                        Value="{StaticResource MaterialDesignLightBackground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- PackIcon Style -->
+    <Style TargetType="materialDesign:PackIcon">        
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
     </Style>
 
     <!--Close Button Style-->
