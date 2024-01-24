@@ -5,7 +5,6 @@
                     xmlns:valueConverters="clr-namespace:NotePadClone.ValueConverters">
 
     <valueConverters:WindowStateToCornerRadiusConverter x:Key="WindowStateToCornerRadiusConverter" />
-    <valueConverters:BoolToBlackAndWhiteConverter x:Key="BoolToBlackAndWhiteConverter" />
 
     <!-- Window Shadow Effect -->
     <DropShadowEffect x:Key="WindowShadowEffect"
