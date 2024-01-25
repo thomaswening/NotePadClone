@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotePadClone.Models;
+namespace NotePadClone.DocumentModel;
 public interface IDocument
 {
     string Content { get; set; }

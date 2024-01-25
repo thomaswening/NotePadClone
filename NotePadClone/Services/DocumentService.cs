@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using NotePadClone.Models;
+using NotePadClone.DocumentModel;
 
 namespace NotePadClone.Services;
 public class DocumentService : IDocumentService
