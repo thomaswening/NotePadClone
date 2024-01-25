@@ -10,5 +10,4 @@ namespace NotePadClone
     public partial class App : Application
     {
     }
-
 }
