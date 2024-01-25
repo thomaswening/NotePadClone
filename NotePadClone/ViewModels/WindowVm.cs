@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using NotePadClone.Services;
+
 using WpfEssentials.Base;
 
 namespace NotePadClone.ViewModels;
@@ -13,6 +15,7 @@ namespace NotePadClone.ViewModels;
 /// </summary>
 public class WindowVm : ObservableObject
 {
+    private readonly IWindowService _windowService;
     private bool _isDarkTheme = true;
 
     public event EventHandler? CloseWindowRequestedEvent;
@@ -26,6 +29,7 @@ public class WindowVm : ObservableObject
     public DelegateCommand MaximizeWindowCommand { get; }
     public DelegateCommand RestoreWindowCommand { get; }
     public DelegateCommand CloseWindowCommand { get; }
+    public DelegateCommand OpenNewWindowCommand { get; }
 
     public bool IsDarkTheme
     {
@@ -41,9 +45,12 @@ public class WindowVm : ObservableObject
 
     public WindowVm()
     {
+        _windowService = new WindowService();
+
         MinimizeWindowCommand = new DelegateCommand(_ => MinimizeWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         MaximizeWindowCommand = new DelegateCommand(_ => MaximizeWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         RestoreWindowCommand = new DelegateCommand(_ => RestoreWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         CloseWindowCommand = new DelegateCommand(_ => CloseWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
+        OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow());
     }
 }
