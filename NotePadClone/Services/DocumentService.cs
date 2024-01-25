@@ -40,4 +40,6 @@ public class DocumentService : IDocumentService
 
         File.WriteAllText(document.FilePath, document.Content);
     }
+
+    public IDocument CreateNewDocument() => new Document();
 }

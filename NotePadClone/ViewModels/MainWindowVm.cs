@@ -47,7 +47,7 @@ public class MainWindowVm : WindowVm
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
     }
 
-    private void CreateNewDocument() => Document = new Document();    
+    private void CreateNewDocument() => Document = _documentService.CreateNewDocument();   
 
     private void OpenFile()
     {
