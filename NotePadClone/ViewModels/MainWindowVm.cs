@@ -18,8 +18,7 @@ using WpfEssentials.Base;
 namespace NotePadClone.ViewModels;
 public class MainWindowVm : WindowVm
 {
-    private readonly IWindowService _windowService;
-
+    
     private readonly IDocumentService _documentService;
     private IDocument _document;
 
@@ -27,13 +26,12 @@ public class MainWindowVm : WindowVm
     {
         get => _document;
         set => SetField(ref _document, value);
-        }
+    }
 
     public Func<string?>? OpenFileSelectionDialogHandler { get; set; }
     public Func<string?>? OpenSaveFileDialogHandler { get; set; }
 
     public DelegateCommand CreateNewDocumentCommand { get; }
-    public DelegateCommand OpenNewWindowCommand { get; }
     public DelegateCommand OpenFileCommand { get; }
     public DelegateCommand SaveFileCommand { get; }
     public DelegateCommand SaveAsFileCommand { get; }
@@ -43,8 +41,7 @@ public class MainWindowVm : WindowVm
         _documentService = new DocumentService();
         _document = new Document();
 
-        CreateNewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());
-        OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow());
+        CreateNewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());        
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
@@ -58,7 +55,7 @@ public class MainWindowVm : WindowVm
         if (document is not null)
         {
             Document = document;
-        }
+        }        
     }
 
     private void SaveFile()
@@ -76,5 +73,5 @@ public class MainWindowVm : WindowVm
     private void SaveAsFile()
     {
         _documentService.SaveAs(OpenSaveFileDialogHandler, Document);
-    }    
+    }
 }
