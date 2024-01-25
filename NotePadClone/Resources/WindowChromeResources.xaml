@@ -119,6 +119,23 @@
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
     </Style>
+    
+    <!--Templates for Button Icons-->
+    <DataTemplate x:Key="WindowCloseIconTemplate">
+        <materialDesign:PackIcon Kind="WindowClose" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="WindowMaximizeIconTemplate">
+        <materialDesign:PackIcon Kind="WindowMaximize" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="WindowRestoreIconTemplate">
+        <materialDesign:PackIcon Kind="WindowRestore" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="WindowMinimizeIconTemplate">
+        <materialDesign:PackIcon Kind="WindowMinimize" />
+    </DataTemplate>
 
     <!--Close Button Style-->
     <Style TargetType="{x:Type Button}"
@@ -134,11 +151,8 @@
         <Setter Property="Margin"
                 Value="0" />
 
-        <Setter Property="Content">
-            <Setter.Value>
-                <materialDesign:PackIcon Kind="WindowClose" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="ContentTemplate"
+                Value="{StaticResource WindowCloseIconTemplate}" />
     </Style>
 
     <!--Maximize Button Style-->
@@ -152,11 +166,8 @@
         <Setter Property="ToolTip"
                 Value="Maximize" />
 
-        <Setter Property="Content">
-            <Setter.Value>
-                <materialDesign:PackIcon Kind="WindowMaximize" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="ContentTemplate"
+                Value="{StaticResource WindowMaximizeIconTemplate}" />
 
         <Setter Property="Visibility"
                 Value="Visible" />
@@ -182,11 +193,8 @@
         <Setter Property="ToolTip"
                 Value="Restore" />
 
-        <Setter Property="Content">
-            <Setter.Value>
-                <materialDesign:PackIcon Kind="WindowRestore" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="ContentTemplate"
+                Value="{StaticResource WindowRestoreIconTemplate}" />
 
         <Setter Property="Visibility"
                 Value="Collapsed" />
@@ -212,11 +220,8 @@
         <Setter Property="ToolTip"
                 Value="Minimize" />
 
-        <Setter Property="Content">
-            <Setter.Value>
-                <materialDesign:PackIcon Kind="WindowMinimize" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="ContentTemplate"
+                Value="{StaticResource WindowMinimizeIconTemplate}" />
     </Style>
 
     <!-- Window Style -->
