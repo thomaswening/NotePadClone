@@ -71,7 +71,7 @@
                  FontFamily="Consolas"
                  Padding="15"
                  Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                 Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding Document.Content, UpdateSourceTrigger=PropertyChanged}" />
 
         <!-- Status Bar -->
         <DockPanel Grid.Row="2"
@@ -101,19 +101,19 @@
                        Text="File Size: " />
             
             <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding FileSizeInBytes, Converter={StaticResource FileSizeConverter}}" />
+                       Text="{Binding Document.FileSizeInBytes, Converter={StaticResource FileSizeConverter}}" />
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Characters: " />
 
             <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding NumberOfCharacters, Converter={StaticResource IntToStringConverter}, ConverterParameter=N0}" />
+                       Text="{Binding Document.NumberOfCharacters, Converter={StaticResource IntToStringConverter}, ConverterParameter=N0}" />
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Lines: " />
             
             <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding NumberOfLines}" />
+                       Text="{Binding Document.NumberOfLines}" />
 
             <TextBlock Style="{StaticResource Left}"
                        Text="Dark Mode " />

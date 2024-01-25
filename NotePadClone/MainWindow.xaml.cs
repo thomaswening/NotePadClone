@@ -36,8 +36,8 @@ namespace NotePadClone
             this.SubscribeToWindowEvents((WindowVm)DataContext);
 
             var vm = (MainWindowVm)DataContext;
-            vm.OpenFileFunc = () => OpenFileDialog(new OpenFileDialog());
-            vm.SaveFileFunc = () => OpenFileDialog(new SaveFileDialog());
+            vm.OpenFileSelectionDialogHandler = () => OpenFileDialog(new OpenFileDialog());
+            vm.OpenSaveFileDialogHandler = () => OpenFileDialog(new SaveFileDialog());
             vm.SwitchThemeAction = () => this.SwitchWindowTheme(vm);
         }
 
