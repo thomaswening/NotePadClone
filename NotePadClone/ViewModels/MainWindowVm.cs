@@ -10,7 +10,7 @@ using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
-using NotePadClone.Models;
+using NotePadClone.DocumentModel;
 using NotePadClone.Services;
 
 using WpfEssentials.Base;

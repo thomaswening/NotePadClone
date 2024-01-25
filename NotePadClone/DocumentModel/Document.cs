@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using WpfEssentials.Base;
 
-namespace NotePadClone.Models;
+namespace NotePadClone.DocumentModel;
 public class Document : ObservableObject, IDocument
 {
     private string _content = string.Empty;
