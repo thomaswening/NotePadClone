@@ -10,6 +10,8 @@ using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
+using NotePadClone.Services;
+
 using WpfEssentials.Base;
 
 namespace NotePadClone.ViewModels;
@@ -20,7 +22,7 @@ public class MainWindowVm : WindowVm
     private int _numberOfCharacters;
     private int _numberOfLines;
     private int _fileSizeInBytes;
-    private bool _isDarkTheme = true;
+    private readonly IWindowService _windowService;
 
     public Func<string?>? OpenFileFunc { get; set; }
     public Func<string?>? SaveFileFunc { get; set; }
@@ -57,14 +59,18 @@ public class MainWindowVm : WindowVm
     }
 
 
-    public DelegateCommand NewDocumentCommand { get; }
+    public DelegateCommand CreateNewDocumentCommand { get; }
+    public DelegateCommand OpenNewWindowCommand { get; }
     public DelegateCommand OpenFileCommand { get; }
     public DelegateCommand SaveFileCommand { get; }
     public DelegateCommand SaveAsFileCommand { get; }
 
     public MainWindowVm()
     {
-        NewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());
+        _windowService = new WindowService();
+
+        CreateNewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());
+        OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
