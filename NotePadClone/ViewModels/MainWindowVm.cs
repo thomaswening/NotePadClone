@@ -10,6 +10,7 @@ using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
+using NotePadClone.Models;
 using NotePadClone.Services;
 
 using WpfEssentials.Base;
@@ -17,47 +18,19 @@ using WpfEssentials.Base;
 namespace NotePadClone.ViewModels;
 public class MainWindowVm : WindowVm
 {
-    private string? _textContent;
-    private string? _currentFilePath;
-    private int _numberOfCharacters;
-    private int _numberOfLines;
-    private int _fileSizeInBytes;
     private readonly IWindowService _windowService;
 
-    public Func<string?>? OpenFileFunc { get; set; }
-    public Func<string?>? SaveFileFunc { get; set; }
+    private readonly IDocumentService _documentService;
+    private IDocument _document;
 
-
-    public string? TextContent
+    public IDocument Document
     {
-        get => _textContent;
-        set
-        {
-            if (!SetField(ref _textContent, value)) return;
-
-            SaveFileCommand.OnCanExecuteChanged();
-            UpdateDocumentInfo();
+        get => _document;
+        set => SetField(ref _document, value);
         }
-    }
 
-    public int NumberOfCharacters
-    {
-        get => _numberOfCharacters;
-        set => SetField(ref _numberOfCharacters, value);
-    }
-
-    public int NumberOfLines
-    {
-        get => _numberOfLines;
-        set => SetField(ref _numberOfLines, value);
-    }
-
-    public int FileSizeInBytes
-    {
-        get => _fileSizeInBytes;
-        set => SetField(ref _fileSizeInBytes, value);
-    }
-
+    public Func<string?>? OpenFileSelectionDialogHandler { get; set; }
+    public Func<string?>? OpenSaveFileDialogHandler { get; set; }
 
     public DelegateCommand CreateNewDocumentCommand { get; }
     public DelegateCommand OpenNewWindowCommand { get; }
@@ -67,80 +40,32 @@ public class MainWindowVm : WindowVm
 
     public MainWindowVm()
     {
-        _windowService = new WindowService();
+        _documentService = new DocumentService();
+        _document = new Document();
 
         CreateNewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());
         OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
-        SaveFileCommand = new DelegateCommand(_ => SaveFile(), _ => CanSaveFile());
+        SaveFileCommand = new DelegateCommand(_ => SaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
-
-        UpdateDocumentInfo();
     }
 
-    private void UpdateDocumentInfo()
-    {
-        NumberOfCharacters = GetNumberOfVisibleCharacters();
-        NumberOfLines = GetNumberOfLines();
-        FileSizeInBytes = GetFileSizeInBytes();
-    }
-
-    private int GetNumberOfVisibleCharacters()
-    {
-        if (string.IsNullOrEmpty(TextContent))
-        {
-            return 0;
-        }
-
-        const string visibleCharactersRegexStr = @"[^\p{Cc}^\p{Cn}^\p{Cs}]";
-        return Regex.Matches(TextContent, visibleCharactersRegexStr).Count;
-    }
-
-    private int NumberOfNewLines => Regex.Matches(TextContent ?? string.Empty, Environment.NewLine).Count;
-
-    private int GetFileSizeInBytes()
-    {
-        if (string.IsNullOrEmpty(_currentFilePath))
-        {
-            return 0;
-        }
-
-        return (int)Convert.ToInt64(new FileInfo(_currentFilePath).Length);
-    }
-
-    private int GetNumberOfLines()
-    {
-        if (string.IsNullOrEmpty(TextContent)
-            || (NumberOfNewLines == 0 && NumberOfCharacters == 0))
-        {
-            return 0;
-        }
-
-        return NumberOfNewLines + 1;
-    }
-
-    private void CreateNewDocument()
-    {
-        _currentFilePath = null;
-        TextContent = string.Empty;        
-    }
+    private void CreateNewDocument() => Document = new Document();    
 
     private void OpenFile()
     {
-        string? filePath = OpenFileFunc?.Invoke();
-
-        if (filePath is null) return;
-
-        _currentFilePath = filePath;
-        TextContent = File.ReadAllText(_currentFilePath);
+        var document = _documentService.OpenDocument(OpenFileSelectionDialogHandler);
+        if (document is not null)
+        {
+            Document = document;
+        }
     }
 
     private void SaveFile()
     {
-        if (!string.IsNullOrEmpty(_currentFilePath))
+        if (!string.IsNullOrEmpty(Document.FilePath))
         {
-            File.WriteAllText(_currentFilePath, TextContent);
-            FileSizeInBytes = GetFileSizeInBytes();
+            _documentService.Save(Document);
         }
         else
         {
@@ -150,14 +75,6 @@ public class MainWindowVm : WindowVm
 
     private void SaveAsFile()
     {
-        string? filePath = SaveFileFunc?.Invoke();
-
-        if (filePath is null) return;
-
-        _currentFilePath = filePath;
-        File.WriteAllText(_currentFilePath, TextContent);
-        FileSizeInBytes = GetFileSizeInBytes();
+        _documentService.SaveAs(OpenSaveFileDialogHandler, Document);
     }    
-
-    private bool CanSaveFile() => !string.IsNullOrEmpty(TextContent);
 }
