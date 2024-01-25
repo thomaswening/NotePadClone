@@ -13,6 +13,12 @@ namespace NotePadClone.Services;
 /// </summary>
 public interface IDocumentService
 {
+    /// <summary>
+    /// Creates a new document.
+    /// </summary>
+    /// <returns>An empty document.</returns>
+    IDocument CreateNewDocument();
+
     ///<summary>
     /// Opens a file and returns its content.
     /// </summary>
@@ -31,5 +37,5 @@ public interface IDocumentService
     /// Saves a document to its filepath.
     /// </summary>
     /// <param name="document">Document to save.</param>
-    void Save(IDocument document);
+    void Save(IDocument document);    
 }
