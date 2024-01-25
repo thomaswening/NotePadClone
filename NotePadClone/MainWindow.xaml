@@ -38,7 +38,7 @@
         <Menu Grid.Row="0"
               materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
             <MenuItem Header="_File">
-                <MenuItem Command="{Binding NewDocumentCommand}"
+                <MenuItem Command="{Binding CreateNewDocumentCommand}"
                           Header="_New" />
                 
                 <MenuItem Command="{Binding OpenFileCommand}"
@@ -51,6 +51,10 @@
                           Header="Save _As..." />
                 
                 <Separator />
+
+                <MenuItem Command="{Binding OpenNewWindowCommand}"
+                          Header="New Window" />
+                
                 <MenuItem Command="{Binding CloseWindowCommand}"
                           Header="_Exit" />
             </MenuItem>
