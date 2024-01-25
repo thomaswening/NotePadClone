@@ -12,39 +12,33 @@ namespace NotePadClone.Models;
 public class Document : ObservableObject, IDocument
 {
     private string _content = string.Empty;
-    public string? _filePath;
 
     public Document() { }
     public Document(string? filePath, string content)
     {
-        FilePath = filePath;
         Content = content;
+        Metadata.FilePath = filePath;
     }
+    public DocumentMetadata Metadata { get; } = new();
 
-    public string Content 
-    { 
-        get => _content; 
+    public string Content
+    {
+        get => _content;
         set
         {
-            if (!SetField(ref _content, value)) return;
+            if (!SetField(ref _content, value))
+                return;
 
-            OnPropertyChanged(nameof(NumberOfCharacters));
-            OnPropertyChanged(nameof(NumberOfLines));
-            OnPropertyChanged(nameof(FileSizeInBytes));
+            UpdateMetadata();
         }
     }
 
-    public string? FilePath
+    private void UpdateMetadata()
     {
-        get => _filePath; 
-        set => SetField(ref _filePath, value);
+        Metadata.NumberOfCharacters = GetNumberOfVisibleCharacters();
+        Metadata.NumberOfLines = GetNumberOfLines();
+        Metadata.FileSizeInBytes = GetFileSizeInBytes();
     }
-
-    public int NumberOfCharacters => GetNumberOfVisibleCharacters();
-
-    public int NumberOfLines => GetNumberOfLines();
-
-    public int FileSizeInBytes => GetFileSizeInBytes();
 
     private int GetNumberOfVisibleCharacters()
     {
@@ -62,7 +56,7 @@ public class Document : ObservableObject, IDocument
     private int GetNumberOfLines()
     {
         if (string.IsNullOrEmpty(Content)
-            || (NumberOfNewLines == 0 && NumberOfCharacters == 0))
+            || (NumberOfNewLines == 0 && Metadata.NumberOfCharacters == 0))
         {
             return 0;
         }
@@ -72,11 +66,11 @@ public class Document : ObservableObject, IDocument
 
     private int GetFileSizeInBytes()
     {
-        if (string.IsNullOrEmpty(FilePath))
+        if (string.IsNullOrEmpty(Metadata.FilePath))
         {
             return 0;
         }
 
-        return (int)Convert.ToInt64(new FileInfo(FilePath).Length);
+        return (int)Convert.ToInt64(new FileInfo(Metadata.FilePath).Length);
     }
 }

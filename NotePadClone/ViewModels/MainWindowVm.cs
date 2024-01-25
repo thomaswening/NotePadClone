@@ -60,7 +60,7 @@ public class MainWindowVm : WindowVm
 
     private void SaveFile()
     {
-        if (!string.IsNullOrEmpty(Document.FilePath))
+        if (!string.IsNullOrEmpty(Document.Metadata.FilePath))
         {
             _documentService.Save(Document);
         }

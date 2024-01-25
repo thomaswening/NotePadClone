@@ -29,16 +29,16 @@ public class DocumentService : IDocumentService
         if (string.IsNullOrEmpty(filePath))
             return;
 
-        document.FilePath = filePath;
+        document.Metadata.FilePath = filePath;
         File.WriteAllText(filePath, document.Content);
     }
 
     public void Save(IDocument document)
     {
-        if (string.IsNullOrEmpty(document.FilePath))
+        if (string.IsNullOrEmpty(document.Metadata.FilePath))
             return;
 
-        File.WriteAllText(document.FilePath, document.Content);
+        File.WriteAllText(document.Metadata.FilePath, document.Content);
     }
 
     public IDocument CreateNewDocument() => new Document();

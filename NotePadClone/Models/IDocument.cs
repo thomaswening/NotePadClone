@@ -8,8 +8,5 @@ namespace NotePadClone.Models;
 public interface IDocument
 {
     string Content { get; set; }
-    string? FilePath { get; set; }
-    int NumberOfCharacters { get; }
-    int NumberOfLines { get; }
-    int FileSizeInBytes { get; }
+    DocumentMetadata Metadata { get; }
 }
