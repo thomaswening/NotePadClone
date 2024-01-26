@@ -26,26 +26,33 @@ namespace NotePadClone
     /// </summary>
     public partial class MainWindow : Window
     {
-        IWindowService _windowService;
-        MainWindowVm _viewModel;
+        readonly IWindowService? _windowService;
+        readonly MainWindowVm? _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            _windowService = new WindowService();
-            _viewModel = new MainWindowVm(_windowService);
+        }
+
+        public MainWindow(MainWindowVm viewModel, IWindowService windowService) : this()
+        {
+            _windowService = windowService;
+            _viewModel = viewModel;
             DataContext = _viewModel;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (_viewModel is null) throw new InvalidOperationException("View model is null.");
+            if (_windowService is null) throw new InvalidOperationException("Window service is null.");
+
             _windowService.SubscribeToWindowEvents(this);
             _viewModel.SwitchThemeAction = () => _windowService.SwitchWindowTheme(this);
             _viewModel.OpenFileSelectionDialogHandler = () => OpenFileDialog(new OpenFileDialog());
             _viewModel.OpenSaveFileDialogHandler = () => OpenFileDialog(new SaveFileDialog());
         }
 
-        private string? OpenFileDialog(FileDialog dialog)
+        private static string? OpenFileDialog(FileDialog dialog)
         {
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
