@@ -61,53 +61,9 @@
                  Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                  Text="{Binding Document.Content, UpdateSourceTrigger=PropertyChanged}" />
 
-        <!-- Status Bar -->
-        <DockPanel Grid.Row="2"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Center"
-                   Margin="5">
-
-            <DockPanel.Resources>
-                <Style x:Key="Left" 
-                       TargetType="{x:Type TextBlock}"
-                       BasedOn="{StaticResource MaterialDesignTextBlock}">
-                    
-                    <Setter Property="Margin"
-                            Value="5 0 0 0" />                    
-                </Style>
-
-                <Style x:Key="Right" 
-                       TargetType="{x:Type TextBlock}"
-                       BasedOn="{StaticResource MaterialDesignTextBlock}">
-
-                    <Setter Property="Margin"
-                            Value="0 0 5 0" />
-                </Style>
-            </DockPanel.Resources>
-            
-            <TextBlock Style="{StaticResource Left}" 
-                       Text="File Size: " />
-            
-            <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding Document.Metadata.FileSizeInBytes, Converter={StaticResource FileSizeConverter}}" />
-
-            <TextBlock Style="{StaticResource Left}"
-                       Text="Characters: " />
-
-            <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding Document.Metadata.NumberOfCharacters, Converter={StaticResource IntToStringConverter}, ConverterParameter=N0}" />
-
-            <TextBlock Style="{StaticResource Left}"
-                       Text="Lines: " />
-            
-            <TextBlock Style="{StaticResource Right}"
-                       Text="{Binding Document.Metadata.NumberOfLines}" />
-
-            <TextBlock Style="{StaticResource Left}"
-                       Text="Dark Mode " />
-            
-            <ToggleButton Margin="5 0"
-                          IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" />
-        </DockPanel>
+        <controls:StatusBarControl Grid.Row="2"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
     </Grid>
 </Window>
