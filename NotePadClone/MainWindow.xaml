@@ -26,18 +26,30 @@
     </Window.Resources>
 
     <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenNewTabCommand}"
+                    Key="N"
+                    Modifiers="Control" />
+        
         <KeyBinding Command="{Binding OpenNewWindowCommand}"
                     Key="N"
                     Modifiers="Control+Shift" />
+        
         <KeyBinding Command="{Binding OpenFileCommand}"
                     Key="O"
                     Modifiers="Control" />
+        
         <KeyBinding Command="{Binding SaveFileCommand}"
                     Key="S"
                     Modifiers="Control" />
+        
         <KeyBinding Command="{Binding SaveAsFileCommand}"
                     Key="S"
                     Modifiers="Control+Shift" />
+        
+        <KeyBinding Command="{Binding CloseTabCommand}"
+                    Key="W"
+                    Modifiers="Control" />
+
         <KeyBinding Command="{Binding CloseWindowCommand}"
                     Key="W"
                     Modifiers="Control+Shift" />
@@ -67,12 +79,12 @@
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <TextBox AcceptsReturn="True"
-                 AcceptsTab="True"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"
-                 FontFamily="Consolas"
-                 Padding="15"
-                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                             AcceptsTab="True"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             FontFamily="Consolas"
+                             Padding="15"
+                             Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                              Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>

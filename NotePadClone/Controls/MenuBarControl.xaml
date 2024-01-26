@@ -10,6 +10,10 @@
     
     <Menu materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
         <MenuItem Header="_File">
+            <MenuItem Command="{Binding OpenNewTabCommand}"
+                      Header="_New tab"
+                      InputGestureText="Ctrl+N" />
+            
             <MenuItem Command="{Binding OpenNewWindowCommand}"
                       Header="New _window"
                       InputGestureText="Ctrl+Shift+N" />
@@ -28,6 +32,10 @@
 
             <Separator />
 
+            <MenuItem Command="{Binding CloseTabCommand}"
+                      Header="_Close Tab"
+                      InputGestureText="Ctrl+W" />
+            
             <MenuItem Command="{Binding CloseWindowCommand}"
                       Header="Clos_e Window"
                       InputGestureText="Ctrl+Shift+W" />
