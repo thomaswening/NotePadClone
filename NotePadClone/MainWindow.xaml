@@ -26,9 +26,9 @@
     </Window.Resources>
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding CreateNewDocumentCommand}"
+        <KeyBinding Command="{Binding OpenNewWindowCommand}"
                     Key="N"
-                    Modifiers="Control" />
+                    Modifiers="Control+Shift" />
         <KeyBinding Command="{Binding OpenFileCommand}"
                     Key="O"
                     Modifiers="Control" />
@@ -37,6 +37,9 @@
                     Modifiers="Control" />
         <KeyBinding Command="{Binding SaveAsFileCommand}"
                     Key="S"
+                    Modifiers="Control+Shift" />
+        <KeyBinding Command="{Binding CloseWindowCommand}"
+                    Key="W"
                     Modifiers="Control+Shift" />
     </Window.InputBindings>
 

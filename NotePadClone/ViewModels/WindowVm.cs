@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 using NotePadClone.Services;
 
@@ -30,6 +31,7 @@ public class WindowVm : ObservableObject
     public DelegateCommand RestoreWindowCommand { get; }
     public DelegateCommand CloseWindowCommand { get; }
     public DelegateCommand OpenNewWindowCommand { get; protected set; }
+    public DelegateCommand ExitApplicationCommand { get; protected set; }
 
     public bool IsDarkTheme
     {
@@ -52,5 +54,6 @@ public class WindowVm : ObservableObject
         RestoreWindowCommand = new DelegateCommand(_ => RestoreWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         CloseWindowCommand = new DelegateCommand(_ => CloseWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow<MainWindow>());
+        ExitApplicationCommand = new DelegateCommand(_ => Application.Current.Shutdown());
     }
 }

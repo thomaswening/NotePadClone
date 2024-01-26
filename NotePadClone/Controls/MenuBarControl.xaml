@@ -10,9 +10,9 @@
     
     <Menu materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
         <MenuItem Header="_File">
-            <MenuItem Command="{Binding CreateNewDocumentCommand}"
-                      Header="_New"
-                      InputGestureText="Ctrl+N" />
+            <MenuItem Command="{Binding OpenNewWindowCommand}"
+                      Header="New _window"
+                      InputGestureText="Ctrl+Shift+N" />
 
             <MenuItem Command="{Binding OpenFileCommand}"
                       Header="_Open"
@@ -24,15 +24,16 @@
 
             <MenuItem Command="{Binding SaveAsFileCommand}"
                       Header="Save _As"
-                      InputGestureText="Ctrl+Shift+N" />
+                      InputGestureText="Ctrl+Shift+S" />
 
             <Separator />
 
-            <MenuItem Command="{Binding OpenNewWindowCommand}"
-                      Header="New Window" />
-
             <MenuItem Command="{Binding CloseWindowCommand}"
-                      Header="_Exit" />
+                      Header="Clos_e Window"
+                      InputGestureText="Ctrl+Shift+W" />
+
+            <MenuItem Command="{Binding ExitApplicationCommand}"
+                      Header="E_xit" />
         </MenuItem>
         <!-- Additional Menu Items Here -->
     </Menu>
