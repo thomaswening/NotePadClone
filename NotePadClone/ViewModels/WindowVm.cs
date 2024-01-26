@@ -29,7 +29,7 @@ public class WindowVm : ObservableObject
     public DelegateCommand MaximizeWindowCommand { get; }
     public DelegateCommand RestoreWindowCommand { get; }
     public DelegateCommand CloseWindowCommand { get; }
-    public DelegateCommand OpenNewWindowCommand { get; }
+    public DelegateCommand OpenNewWindowCommand { get; protected set; }
 
     public bool IsDarkTheme
     {
@@ -51,6 +51,6 @@ public class WindowVm : ObservableObject
         MaximizeWindowCommand = new DelegateCommand(_ => MaximizeWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         RestoreWindowCommand = new DelegateCommand(_ => RestoreWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         CloseWindowCommand = new DelegateCommand(_ => CloseWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
-        OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow());
+        OpenNewWindowCommand = new DelegateCommand(_ => _windowService.OpenNewWindow<MainWindow>());
     }
 }

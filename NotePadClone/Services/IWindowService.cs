@@ -17,7 +17,8 @@ namespace NotePadClone.Services
         /// <summary>
         /// Opens a new window.
         /// </summary>
-        void OpenNewWindow();
+        /// <typeparam name="T">Type of window to open.</typeparam>
+        void OpenNewWindow<T>() where T : Window;
 
         /// <summary>
         /// Minimizes the window.

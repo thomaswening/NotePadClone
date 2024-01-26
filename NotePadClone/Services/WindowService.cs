@@ -5,15 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using NotePadClone.ViewModels;
 
 namespace NotePadClone.Services
 {
-    internal class WindowService : IWindowService
+    internal class WindowService(IServiceProvider serviceProvider) : IWindowService
     {
-        public void OpenNewWindow() 
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
+
+        public void OpenNewWindow<T>() where T : Window 
         {
-            var window = new MainWindow();
+            var window = _serviceProvider.GetService<T>() ?? throw new InvalidOperationException($"Could not resolve {typeof(T)}.");
             window.Show();
         }
 
