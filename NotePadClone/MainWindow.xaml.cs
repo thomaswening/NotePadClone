@@ -13,7 +13,7 @@ using MaterialDesignThemes.Wpf;
 
 using Microsoft.Win32;
 
-using NotePadClone.Utilities;
+using NotePadClone.Services;
 using NotePadClone.ViewModels;
 
 using WpfEssentials.Base;
@@ -26,19 +26,23 @@ namespace NotePadClone
     /// </summary>
     public partial class MainWindow : Window
     {
+        IWindowService _windowService;
+        MainWindowVm _viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+            _windowService = new WindowService();
+            _viewModel = new MainWindowVm(_windowService);
+            DataContext = _viewModel;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.SubscribeToWindowEvents((WindowVm)DataContext);
-
-            var vm = (MainWindowVm)DataContext;
-            vm.OpenFileSelectionDialogHandler = () => OpenFileDialog(new OpenFileDialog());
-            vm.OpenSaveFileDialogHandler = () => OpenFileDialog(new SaveFileDialog());
-            vm.SwitchThemeAction = () => this.SwitchWindowTheme(vm);
+            _windowService.SubscribeToWindowEvents(this);
+            _viewModel.SwitchThemeAction = () => _windowService.SwitchWindowTheme(this);
+            _viewModel.OpenFileSelectionDialogHandler = () => OpenFileDialog(new OpenFileDialog());
+            _viewModel.OpenSaveFileDialogHandler = () => OpenFileDialog(new SaveFileDialog());
         }
 
         private string? OpenFileDialog(FileDialog dialog)
