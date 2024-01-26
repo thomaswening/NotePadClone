@@ -24,13 +24,15 @@ public class MainWindowVm : WindowVm
 {
     
     private readonly IDocumentService _documentService;
-    private IDocument _document;
+    private IDocument _selectedDocument;
 
-    public IDocument Document
+    public IDocument SelectedDocument
     {
-        get => _document;
-        set => SetField(ref _document, value);
+        get => _selectedDocument;
+        set => SetField(ref _selectedDocument, value);
     }
+
+    public ObservableCollection<IDocument> Documents { get; } = [ ];
 
     /// <summary>
     /// Delegate to open the file selection dialog in the view that uses this view model and return the selected path.
@@ -42,7 +44,7 @@ public class MainWindowVm : WindowVm
     /// </summary>
     public Func<string?>? OpenSaveFileDialogHandler { get; set; }
 
-    public DelegateCommand CreateNewDocumentCommand { get; }
+    public DelegateCommand OpenNewTabCommand { get; }
     public DelegateCommand OpenFileCommand { get; }
     public DelegateCommand SaveFileCommand { get; }
     public DelegateCommand SaveAsFileCommand { get; }
@@ -50,30 +52,36 @@ public class MainWindowVm : WindowVm
     public MainWindowVm(IWindowService windowService, IDocumentService documentService) : base(windowService)
     {
         _documentService = documentService;
-        _document = new Document();
+        Documents.Add(_documentService.CreateNewDocument());
+        _selectedDocument = Documents.First();
 
-        CreateNewDocumentCommand = new DelegateCommand(_ => CreateNewDocument());        
+        OpenNewTabCommand = new DelegateCommand(_ => OpenNewTab());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
     }
 
-    private void CreateNewDocument() => Document = _documentService.CreateNewDocument();   
+    private void OpenNewTab()
+    {
+        Documents.Add(_documentService.CreateNewDocument());
+        SelectedDocument = Documents.Last();
+    }   
 
     private void OpenFile()
     {
         var document = _documentService.OpenDocument(OpenFileSelectionDialogHandler);
         if (document is not null)
         {
-            Document = document;
+            Documents.Add(document);
+            SelectedDocument = Documents.Last();
         }        
     }
 
     private void SaveFile()
     {
-        if (!string.IsNullOrEmpty(Document.Metadata.FilePath))
+        if (!string.IsNullOrEmpty(SelectedDocument.Metadata.FilePath))
         {
-            _documentService.Save(Document);
+            _documentService.Save(SelectedDocument);
         }
         else
         {
@@ -83,6 +91,6 @@ public class MainWindowVm : WindowVm
 
     private void SaveAsFile()
     {
-        _documentService.SaveAs(OpenSaveFileDialogHandler, Document);
+        _documentService.SaveAs(OpenSaveFileDialogHandler, SelectedDocument);
     }
 }
