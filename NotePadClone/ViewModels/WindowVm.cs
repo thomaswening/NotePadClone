@@ -43,9 +43,9 @@ public class WindowVm : ObservableObject
         }
     }
 
-    public WindowVm()
+    public WindowVm(IWindowService windowService)
     {
-        _windowService = new WindowService();
+        _windowService = windowService;
 
         MinimizeWindowCommand = new DelegateCommand(_ => MinimizeWindowRequestedEvent?.Invoke(this, EventArgs.Empty));
         MaximizeWindowCommand = new DelegateCommand(_ => MaximizeWindowRequestedEvent?.Invoke(this, EventArgs.Empty));

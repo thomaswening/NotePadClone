@@ -47,7 +47,7 @@ public class MainWindowVm : WindowVm
     public DelegateCommand SaveFileCommand { get; }
     public DelegateCommand SaveAsFileCommand { get; }
 
-    public MainWindowVm()
+    public MainWindowVm(IWindowService windowService) : base(windowService)
     {
         _documentService = new DocumentService();
         _document = new Document();
