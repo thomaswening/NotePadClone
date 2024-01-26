@@ -16,6 +16,10 @@ using NotePadClone.Services;
 using WpfEssentials.Base;
 
 namespace NotePadClone.ViewModels;
+
+/// <summary>
+/// View model for the main window, representing the text editor.
+/// </summary>
 public class MainWindowVm : WindowVm
 {
     
@@ -28,7 +32,14 @@ public class MainWindowVm : WindowVm
         set => SetField(ref _document, value);
     }
 
+    /// <summary>
+    /// Delegate to open the file selection dialog in the view that uses this view model and return the selected path.
+    /// </summary>
     public Func<string?>? OpenFileSelectionDialogHandler { get; set; }
+
+    /// <summary>
+    /// Delegate to open the save file dialog in the view that uses this view model and return the file's selected path.
+    /// </summary>
     public Func<string?>? OpenSaveFileDialogHandler { get; set; }
 
     public DelegateCommand CreateNewDocumentCommand { get; }
