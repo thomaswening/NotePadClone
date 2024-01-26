@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:NotePadClone"
         xmlns:viewModels="clr-namespace:NotePadClone.ViewModels"
+        xmlns:controls="clr-namespace:NotePadClone.Controls"
         xmlns:valueConverter="clr-namespace:NotePadClone.ValueConverters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModels:MainWindowVm, IsDesignTimeCreatable=False}"
@@ -46,36 +47,7 @@
             <RowDefinition Height="Auto" />     <!-- Status Bar Row -->
         </Grid.RowDefinitions>
 
-        <!-- Menu Bar -->
-        <Menu Grid.Row="0"
-              materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
-            <MenuItem Header="_File">
-                <MenuItem Command="{Binding CreateNewDocumentCommand}"
-                          Header="_New"
-                          InputGestureText="Ctrl+N" />
-
-                <MenuItem Command="{Binding OpenFileCommand}"
-                          Header="_Open"
-                          InputGestureText="Ctrl+O" />
-                
-                <MenuItem Command="{Binding SaveFileCommand}"
-                          Header="_Save"
-                          InputGestureText="Ctrl+S" />
-                
-                <MenuItem Command="{Binding SaveAsFileCommand}"
-                          Header="Save _As"
-                          InputGestureText="Ctrl+Shift+N" />
-                
-                <Separator />
-
-                <MenuItem Command="{Binding OpenNewWindowCommand}"
-                          Header="New Window" />
-                
-                <MenuItem Command="{Binding CloseWindowCommand}"
-                          Header="_Exit" />
-            </MenuItem>
-            <!-- Additional Menu Items Here -->
-        </Menu>
+        <controls:MenuBarControl Grid.Row="0" />
 
         <!-- Text Editor Area -->
         <TextBox Grid.Row="1"
