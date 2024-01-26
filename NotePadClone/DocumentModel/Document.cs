@@ -18,6 +18,7 @@ public class Document : ObservableObject, IDocument
     {
         Content = content;
         Metadata.FilePath = filePath;
+        Metadata.Update(Content);
     }
     public DocumentMetadata Metadata { get; } = new();
 

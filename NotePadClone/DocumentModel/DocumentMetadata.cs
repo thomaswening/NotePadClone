@@ -28,7 +28,13 @@ public class DocumentMetadata : ObservableObject
     public string? FilePath
     {
         get => _filePath;
-        set => SetField(ref _filePath, value);
+        set
+        {
+            if (!SetField(ref _filePath, value))
+                return;
+            
+            Title = GetTitle();
+        }
     }
 
     public string Title
