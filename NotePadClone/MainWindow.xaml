@@ -72,7 +72,7 @@
             
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="Title" />
+                    <TextBlock Text="{Binding Metadata.Title}" />
                 </DataTemplate>
             </TabControl.ItemTemplate>
             
