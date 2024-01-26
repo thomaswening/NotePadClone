@@ -27,17 +27,21 @@
                       InputGestureText="Ctrl+S" />
 
             <MenuItem Command="{Binding SaveAsFileCommand}"
-                      Header="Save _As"
+                      Header="Save _as"
                       InputGestureText="Ctrl+Shift+S" />
+
+            <MenuItem Command="{Binding SaveAllCommand}"
+                      Header="Save a_ll"
+                      InputGestureText="Ctrl+Alt+S" />
 
             <Separator />
 
             <MenuItem Command="{Binding CloseTabCommand}"
-                      Header="_Close Tab"
+                      Header="_Close tab"
                       InputGestureText="Ctrl+W" />
             
             <MenuItem Command="{Binding CloseWindowCommand}"
-                      Header="Clos_e Window"
+                      Header="Clos_e window"
                       InputGestureText="Ctrl+Shift+W" />
 
             <MenuItem Command="{Binding ExitApplicationCommand}"

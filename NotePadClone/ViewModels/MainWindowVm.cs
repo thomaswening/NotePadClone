@@ -50,6 +50,7 @@ public class MainWindowVm : WindowVm
     public DelegateCommand OpenFileCommand { get; }
     public DelegateCommand SaveFileCommand { get; }
     public DelegateCommand SaveAsFileCommand { get; }
+    public DelegateCommand SaveAllCommand { get; }
 
     public MainWindowVm(IWindowService windowService, IDocumentService documentService) : base(windowService)
     {
@@ -60,9 +61,11 @@ public class MainWindowVm : WindowVm
         OpenNewTabCommand = new DelegateCommand(_ => OpenNewTab());
         CloseTabCommand = new DelegateCommand(_ => CloseActiveDocument());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
-        SaveFileCommand = new DelegateCommand(_ => SaveFile());
-        SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
+        SaveFileCommand = new DelegateCommand(_ => SaveFile(SelectedDocument));
+        SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile(SelectedDocument));
+        SaveAllCommand = new DelegateCommand(_ => SaveAll());
     }
+       
 
     private void CloseActiveDocument()
     {
@@ -96,20 +99,28 @@ public class MainWindowVm : WindowVm
         }
     }
 
-    private void SaveFile()
+    private void SaveFile(IDocument document)
     {
-        if (!string.IsNullOrEmpty(SelectedDocument.Metadata.FilePath))
+        if (!string.IsNullOrEmpty(document.Metadata.FilePath))
         {
-            _documentService.Save(SelectedDocument);
+            _documentService.Save(document);
         }
         else
         {
-            SaveAsFile();
+            SaveAsFile(document);
         }
     }
 
-    private void SaveAsFile()
+    private void SaveAsFile(IDocument document)
     {
-        _documentService.SaveAs(OpenSaveFileDialogHandler, SelectedDocument);
+        _documentService.SaveAs(OpenSaveFileDialogHandler, document);
+    }
+
+    private void SaveAll()
+    {
+        foreach (var document in Documents)
+        {
+            SaveFile(document);
+        }
     }
 }

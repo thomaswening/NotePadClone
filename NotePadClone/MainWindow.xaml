@@ -41,10 +41,14 @@
         <KeyBinding Command="{Binding SaveFileCommand}"
                     Key="S"
                     Modifiers="Control" />
-        
+
         <KeyBinding Command="{Binding SaveAsFileCommand}"
                     Key="S"
                     Modifiers="Control+Shift" />
+
+        <KeyBinding Command="{Binding SaveAllCommand}"
+                    Key="S"
+                    Modifiers="Control+Alt" />
         
         <KeyBinding Command="{Binding CloseTabCommand}"
                     Key="W"
