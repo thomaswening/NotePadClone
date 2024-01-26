@@ -59,7 +59,7 @@ public class MainWindowVm : WindowVm
         _selectedDocument = Documents.First();
 
         OpenNewTabCommand = new DelegateCommand(_ => OpenNewTab());
-        CloseTabCommand = new DelegateCommand(_ => CloseActiveDocument());
+        CloseTabCommand = new DelegateCommand(doc => CloseDocument(doc));
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile(SelectedDocument));
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile(SelectedDocument));
@@ -67,8 +67,12 @@ public class MainWindowVm : WindowVm
     }
        
 
-    private void CloseActiveDocument()
+    private void CloseDocument(object? document)
     {
+        document ??= SelectedDocument;
+
+        if (document is not IDocument doc) throw new ArgumentException("The document must be of type IDocument.", nameof(document));
+
         switch (Documents.Count)
         {
             case 1:
@@ -76,8 +80,8 @@ public class MainWindowVm : WindowVm
                 break;
 
             default:
-                var index = Documents.IndexOf(SelectedDocument);
-                Documents.Remove(SelectedDocument);
+                var index = Documents.IndexOf(doc);
+                Documents.Remove(doc);
                 SelectedDocument = Documents[Math.Min(index, Documents.Count - 1)];
                 break;
         }
