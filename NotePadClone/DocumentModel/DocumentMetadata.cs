@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using WpfEssentials.Base;
 
 namespace NotePadClone.DocumentModel;
+
+/// <summary>
+/// Represents the metadata of a document.
+/// </summary>
 public class DocumentMetadata : ObservableObject
 {
     public string? _filePath;
@@ -39,6 +43,10 @@ public class DocumentMetadata : ObservableObject
         set => SetField(ref _fileSizeInBytes, value);
     }
 
+    /// <summary>
+    /// Updates the document metadata.
+    /// </summary>
+    /// <param name="documentContent">Content of the document.</param>
     public void Update(string documentContent)
     {
         NumberOfCharacters = GetNumberOfVisibleCharacters(documentContent);

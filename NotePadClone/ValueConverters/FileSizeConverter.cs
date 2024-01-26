@@ -17,6 +17,15 @@ public class FileSizeConverter : IValueConverter
     private const int _megaByte = 1024 * _kiloByte;
     private const int _gigaByte = 1024 * _megaByte;
 
+    /// <summary>
+    /// Converts a file size in bytes to a human readable string.
+    /// </summary>
+    /// <param name="value">File size in bytes, must be int.</param>
+    /// <param name="targetType">Unused.</param>
+    /// <param name="parameter">Unused.</param>
+    /// <param name="culture">Unused.</param>
+    /// <returns>The file size with the biggest approriate Byte unit (B, KB, ...).</returns>
+    /// <exception cref="ArgumentException">Thrown if value is not of type int.</exception>
     public object? Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         if (value is null) return "0 B";
@@ -39,6 +48,16 @@ public class FileSizeConverter : IValueConverter
         }
     }
 
+    /// <summary>
+    /// Converts a human readable file size string to an integer.
+    /// </summary>
+    /// <param name="value">String with file size in a unit of Bytes (B, KB, ...).</param>
+    /// <param name="targetType">Unused.</param>
+    /// <param name="parameter">Unused.</param>
+    /// <param name="culture">Unused.</param>
+    /// <returns>File size in Bytes as an int.</returns>
+    /// <exception cref="ArgumentException">Thrown if value is not a string.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if file size is not a positive int or cannot be parsed.</exception>
     public object? ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         if (value is null) return null;
@@ -47,7 +66,7 @@ public class FileSizeConverter : IValueConverter
 
         if (!int.TryParse(fileSizeString[..^3], out int fileSize) || fileSize < 0)
         {
-            throw new ArgumentException("Value must be a positive integer and smaller that 1 TB.");
+            throw new InvalidOperationException("Value must be a positive integer and smaller that 1 TB.");
         }
 
         if (fileSizeString.EndsWith('B'))
