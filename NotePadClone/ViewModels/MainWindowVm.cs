@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,7 @@ public class MainWindowVm : WindowVm
     public Func<string?>? OpenSaveFileDialogHandler { get; set; }
 
     public DelegateCommand OpenNewTabCommand { get; }
+    public DelegateCommand CloseTabCommand { get; }
     public DelegateCommand OpenFileCommand { get; }
     public DelegateCommand SaveFileCommand { get; }
     public DelegateCommand SaveAsFileCommand { get; }
@@ -56,9 +58,26 @@ public class MainWindowVm : WindowVm
         _selectedDocument = Documents.First();
 
         OpenNewTabCommand = new DelegateCommand(_ => OpenNewTab());
+        CloseTabCommand = new DelegateCommand(_ => CloseActiveDocument());
         OpenFileCommand = new DelegateCommand(_ => OpenFile());
         SaveFileCommand = new DelegateCommand(_ => SaveFile());
         SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile());
+    }
+
+    private void CloseActiveDocument()
+    {
+        switch (Documents.Count)
+        {
+            case 1:
+                CloseWindowCommand.Execute(null);
+                break;
+
+            default:
+                var index = Documents.IndexOf(SelectedDocument);
+                Documents.Remove(SelectedDocument);
+                SelectedDocument = Documents[Math.Min(index, Documents.Count - 1)];
+                break;
+        }
     }
 
     private void OpenNewTab()
@@ -74,7 +93,7 @@ public class MainWindowVm : WindowVm
         {
             Documents.Add(document);
             SelectedDocument = Documents.Last();
-        }        
+        }
     }
 
     private void SaveFile()
