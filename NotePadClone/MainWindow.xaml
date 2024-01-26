@@ -24,6 +24,21 @@
         <valueConverter:IntToStringConverter x:Key="IntToStringConverter" />
     </Window.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CreateNewDocumentCommand}"
+                    Key="N"
+                    Modifiers="Control" />
+        <KeyBinding Command="{Binding OpenFileCommand}"
+                    Key="O"
+                    Modifiers="Control" />
+        <KeyBinding Command="{Binding SaveFileCommand}"
+                    Key="S"
+                    Modifiers="Control" />
+        <KeyBinding Command="{Binding SaveAsFileCommand}"
+                    Key="S"
+                    Modifiers="Control+Shift" />
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />     <!-- Menu Bar Row -->
@@ -36,16 +51,20 @@
               materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
             <MenuItem Header="_File">
                 <MenuItem Command="{Binding CreateNewDocumentCommand}"
-                          Header="_New" />
-                
+                          Header="_New"
+                          InputGestureText="Ctrl+N" />
+
                 <MenuItem Command="{Binding OpenFileCommand}"
-                          Header="_Open..." />
+                          Header="_Open"
+                          InputGestureText="Ctrl+O" />
                 
                 <MenuItem Command="{Binding SaveFileCommand}"
-                          Header="_Save" />
+                          Header="_Save"
+                          InputGestureText="Ctrl+S" />
                 
                 <MenuItem Command="{Binding SaveAsFileCommand}"
-                          Header="Save _As..." />
+                          Header="Save _As"
+                          InputGestureText="Ctrl+Shift+N" />
                 
                 <Separator />
 
