@@ -85,6 +85,7 @@
                         <Button Height="Auto"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding}"
                                 Style="{StaticResource MaterialDesignToolButton}">
                             
                             <materialDesign:PackIcon Kind="Close" />
