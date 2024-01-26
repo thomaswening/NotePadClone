@@ -72,7 +72,20 @@
             
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Metadata.Title}" />
+                    <StackPanel Orientation="Horizontal" 
+                                MaxWidth="300">
+                        
+                        <TextBlock Text="{Binding Metadata.Title}"
+                                   VerticalAlignment="Center"/>
+
+                        <Button Height="Auto"
+                                VerticalAlignment="Center"
+                                Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                Style="{StaticResource MaterialDesignToolButton}">
+                            
+                            <materialDesign:PackIcon Kind="Close" />
+                        </Button>
+                    </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
             
