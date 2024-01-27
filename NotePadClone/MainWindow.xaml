@@ -26,18 +26,34 @@
     </Window.Resources>
 
     <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenNewTabCommand}"
+                    Key="N"
+                    Modifiers="Control" />
+        
         <KeyBinding Command="{Binding OpenNewWindowCommand}"
                     Key="N"
                     Modifiers="Control+Shift" />
-        <KeyBinding Command="{Binding OpenFileCommand}"
+        
+        <KeyBinding Command="{Binding OpenDocumentCommand}"
                     Key="O"
                     Modifiers="Control" />
-        <KeyBinding Command="{Binding SaveFileCommand}"
+        
+        <KeyBinding Command="{Binding SaveDocumentCommand}"
                     Key="S"
                     Modifiers="Control" />
-        <KeyBinding Command="{Binding SaveAsFileCommand}"
+
+        <KeyBinding Command="{Binding SaveDocumentAsCommand}"
                     Key="S"
                     Modifiers="Control+Shift" />
+
+        <KeyBinding Command="{Binding SaveOpenDocumentsCommand}"
+                    Key="S"
+                    Modifiers="Control+Alt" />
+        
+        <KeyBinding Command="{Binding CloseTabCommand}"
+                    Key="W"
+                    Modifiers="Control" />
+
         <KeyBinding Command="{Binding CloseWindowCommand}"
                     Key="W"
                     Modifiers="Control+Shift" />
@@ -50,20 +66,49 @@
             <RowDefinition Height="Auto" />     <!-- Status Bar Row -->
         </Grid.RowDefinitions>
 
+        <!--Menu Bar-->
         <controls:MenuBarControl Grid.Row="0" />
 
         <!-- Text Editor Area -->
-        <TextBox Grid.Row="1"
-                 AcceptsReturn="True"
-                 AcceptsTab="True"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"
-                 TextWrapping="Wrap"
-                 FontFamily="Consolas"
-                 Padding="15"
-                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                 Text="{Binding Document.Content, UpdateSourceTrigger=PropertyChanged}" />
+        <TabControl Grid.Row="1"
+                    ItemsSource="{Binding Documents}"
+                    SelectedItem="{Binding SelectedDocument}">
+            
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" 
+                                MaxWidth="300">
+                        
+                        <TextBlock Text="{Binding Metadata.Title}"
+                                   VerticalAlignment="Center"/>
 
+                        <Button Height="Auto"
+                                VerticalAlignment="Center"
+                                Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding}"
+                                Style="{StaticResource MaterialDesignToolButton}">
+                            
+                            <materialDesign:PackIcon Kind="Close" />
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <TextBox AcceptsReturn="True"
+                             AcceptsTab="True"
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Auto"
+                             FontFamily="Consolas"
+                             Padding="15"
+                             Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                             Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <!--Status Bar-->
         <controls:StatusBarControl Grid.Row="2"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Center"
