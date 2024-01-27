@@ -27,20 +27,24 @@ Notepad Clone is a modern reimagining of the classic Windows Notepad application
 
 #### Features
 - Clone of the Windows 11 Notepad for Windows 10 users.
-- Dark theme UI.
-- Toggle to switch between bright and dark theme.
-- Basic text editing functions: open, edit, and save files.
+- Toggle to switch between light and dark theme.
+- Basic text editing functions: open, edit, and save documents.
 - StatusBar with document statistics.
 - Custom window chrome to resemble Windows 11 style.
 - Developed using MVVM architecture for maintainability.
+- Tabs to open several files in the same window.
 
 #### Planned features 
 - *Unit tests! Because, let's be neat and tidy.*
-- More items on the menu bar, e.g. 'Edit', 'View', 'Settings', ...
-- Tabs to open several files in the same window.
+- More items on the menu bar, e.g. Edit, View, ...
+- Editing features: Search, replacem, undo/redo, copy, cut, paste, select all, find, find next/previous.
 - Functionality that keeps the last open documents if they have not yet been saved before the window is closed.
-- Autosave feature.
-- Search and replace feature.
+- Saving documents improvements: Autosave, warning dialog when closing documents with unsaved changes.
+- Saving and opening different file types/
+- Opening several documents at once.
+- Status bar improvements: cursor position, zoom, line ending, encoding.
+- Drag & drop for tabs.
+- An icon for the whole thing - maybe a unicorn? :D
 - Possibly an alternative UI based on WinUI 3.0 but I will first have to learn using that technology.
 - Whatever useful comes to mind.
 
