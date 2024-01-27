@@ -34,19 +34,19 @@
                     Key="N"
                     Modifiers="Control+Shift" />
         
-        <KeyBinding Command="{Binding OpenFileCommand}"
+        <KeyBinding Command="{Binding OpenDocumentCommand}"
                     Key="O"
                     Modifiers="Control" />
         
-        <KeyBinding Command="{Binding SaveFileCommand}"
+        <KeyBinding Command="{Binding SaveDocumentCommand}"
                     Key="S"
                     Modifiers="Control" />
 
-        <KeyBinding Command="{Binding SaveAsFileCommand}"
+        <KeyBinding Command="{Binding SaveDocumentAsCommand}"
                     Key="S"
                     Modifiers="Control+Shift" />
 
-        <KeyBinding Command="{Binding SaveAllCommand}"
+        <KeyBinding Command="{Binding SaveOpenDocumentsCommand}"
                     Key="S"
                     Modifiers="Control+Alt" />
         

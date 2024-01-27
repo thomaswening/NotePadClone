@@ -18,19 +18,19 @@
                       Header="New _window"
                       InputGestureText="Ctrl+Shift+N" />
 
-            <MenuItem Command="{Binding OpenFileCommand}"
+            <MenuItem Command="{Binding OpenDocumentCommand}"
                       Header="_Open"
                       InputGestureText="Ctrl+O" />
 
-            <MenuItem Command="{Binding SaveFileCommand}"
+            <MenuItem Command="{Binding SaveDocumentCommand}"
                       Header="_Save"
                       InputGestureText="Ctrl+S" />
 
-            <MenuItem Command="{Binding SaveAsFileCommand}"
+            <MenuItem Command="{Binding SaveDocumentAsCommand}"
                       Header="Save _as"
                       InputGestureText="Ctrl+Shift+S" />
 
-            <MenuItem Command="{Binding SaveAllCommand}"
+            <MenuItem Command="{Binding SaveOpenDocumentsCommand}"
                       Header="Save a_ll"
                       InputGestureText="Ctrl+Alt+S" />
 
