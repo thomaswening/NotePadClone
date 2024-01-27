@@ -16,7 +16,11 @@ namespace NotePadClone.DocumentModel;
 /// </summary>
 public class DocumentMetadata : ObservableObject
 {
+    private const string TitleUntitled = "Untitled";
+    private const string visibleCharactersRegexStr = @"[^\p{Cc}^\p{Cn}^\p{Cs}]";
+
     public string? _filePath;
+    private string _title = TitleUntitled;
     public int _numberOfCharacters;
     public int _numberOfLines;
     public int _fileSizeInBytes;
@@ -24,7 +28,19 @@ public class DocumentMetadata : ObservableObject
     public string? FilePath
     {
         get => _filePath;
-        set => SetField(ref _filePath, value);
+        set
+        {
+            if (!SetField(ref _filePath, value))
+                return;
+            
+            Title = GetTitle();
+        }
+    }
+
+    public string Title
+    {
+        get => _title;
+        set => SetField(ref _title, value);
     }
 
     public int NumberOfCharacters
@@ -52,6 +68,17 @@ public class DocumentMetadata : ObservableObject
         NumberOfCharacters = GetNumberOfVisibleCharacters(documentContent);
         NumberOfLines = GetNumberOfLines(documentContent);
         FileSizeInBytes = GetFileSizeInBytes();
+        Title = GetTitle();
+    }
+
+    private string GetTitle()
+    {
+        if (string.IsNullOrEmpty(FilePath))
+        {
+            return TitleUntitled;
+        }
+
+        return Path.GetFileName(FilePath);
     }
 
     private static int GetNumberOfVisibleCharacters(string documentContent)
@@ -60,8 +87,7 @@ public class DocumentMetadata : ObservableObject
         {
             return 0;
         }
-
-        const string visibleCharactersRegexStr = @"[^\p{Cc}^\p{Cn}^\p{Cs}]";
+        
         return Regex.Matches(documentContent, visibleCharactersRegexStr).Count;
     }
 
