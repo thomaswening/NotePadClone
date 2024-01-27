@@ -1,7 +1,8 @@
 # NotePad Clone
-
 #### About
 Notepad Clone is a modern reimagining of the classic Windows Notepad application, specifically tailored to mimic the Windows 11 version. This project was developed to enhance my software development skills, showcasing a blend of traditional text editing with a contemporary, user-friendly interface. Designed primarily for Windows 10 users, it offers a visually appealing alternative to the bright and simplistic native Notepad, with a default dark theme for a more comfortable user experience.
+
+![image](https://github.com/thomaswening/NotePadClone/assets/25326391/d80fba4b-cfa5-4307-863b-bedfa73543e2)
 
 #### Dependencies
 - `MaterialDesignColors` (Version 2.1.4)
