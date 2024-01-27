@@ -47,10 +47,10 @@ public class MainWindowVm : WindowVm
 
     public DelegateCommand OpenNewTabCommand { get; }
     public DelegateCommand CloseTabCommand { get; }
-    public DelegateCommand OpenFileCommand { get; }
-    public DelegateCommand SaveFileCommand { get; }
-    public DelegateCommand SaveAsFileCommand { get; }
-    public DelegateCommand SaveAllCommand { get; }
+    public DelegateCommand OpenDocumentCommand { get; }
+    public DelegateCommand SaveDocumentCommand { get; }
+    public DelegateCommand SaveDocumentAsCommand { get; }
+    public DelegateCommand SaveOpenDocumentsCommand { get; }
 
     public MainWindowVm(IWindowService windowService, IDocumentService documentService) : base(windowService)
     {
@@ -60,10 +60,10 @@ public class MainWindowVm : WindowVm
 
         OpenNewTabCommand = new DelegateCommand(_ => OpenNewTab());
         CloseTabCommand = new DelegateCommand(doc => CloseDocument(doc));
-        OpenFileCommand = new DelegateCommand(_ => OpenFile());
-        SaveFileCommand = new DelegateCommand(_ => SaveFile(SelectedDocument));
-        SaveAsFileCommand = new DelegateCommand(_ => SaveAsFile(SelectedDocument));
-        SaveAllCommand = new DelegateCommand(_ => SaveAll());
+        OpenDocumentCommand = new DelegateCommand(_ => OpenDocument());
+        SaveDocumentCommand = new DelegateCommand(_ => SaveDocument(SelectedDocument));
+        SaveDocumentAsCommand = new DelegateCommand(_ => SaveDocumentAs(SelectedDocument));
+        SaveOpenDocumentsCommand = new DelegateCommand(_ => SaveOpenDocuments());
     }
        
 
@@ -93,7 +93,7 @@ public class MainWindowVm : WindowVm
         SelectedDocument = Documents.Last();
     }   
 
-    private void OpenFile()
+    private void OpenDocument()
     {
         var document = _documentService.OpenDocument(OpenFileSelectionDialogHandler);
         if (document is not null)
@@ -103,7 +103,7 @@ public class MainWindowVm : WindowVm
         }
     }
 
-    private void SaveFile(IDocument document)
+    private void SaveDocument(IDocument document)
     {
         if (!string.IsNullOrEmpty(document.Metadata.FilePath))
         {
@@ -111,20 +111,20 @@ public class MainWindowVm : WindowVm
         }
         else
         {
-            SaveAsFile(document);
+            SaveDocumentAs(document);
         }
     }
 
-    private void SaveAsFile(IDocument document)
+    private void SaveDocumentAs(IDocument document)
     {
         _documentService.SaveAs(OpenSaveFileDialogHandler, document);
     }
 
-    private void SaveAll()
+    private void SaveOpenDocuments()
     {
         foreach (var document in Documents)
         {
-            SaveFile(document);
+            SaveDocument(document);
         }
     }
 }
