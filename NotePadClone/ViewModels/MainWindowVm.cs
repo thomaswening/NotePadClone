@@ -12,6 +12,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
 using NotePadClone.DocumentModel;
+using NotePadClone.ReversibleActions;
 using NotePadClone.Services;
 
 using WpfEssentials.Base;
@@ -25,6 +26,7 @@ public class MainWindowVm : WindowVm
 {
     
     private readonly IDocumentService _documentService;
+    private readonly IReversibleActionsManager _reversibleActionsManager;
     private IDocument _selectedDocument;
 
     public IDocument SelectedDocument
@@ -52,9 +54,11 @@ public class MainWindowVm : WindowVm
     public DelegateCommand SaveDocumentAsCommand { get; }
     public DelegateCommand SaveOpenDocumentsCommand { get; }
 
-    public MainWindowVm(IWindowService windowService, IDocumentService documentService) : base(windowService)
+    public MainWindowVm(IWindowService windowService, IDocumentService documentService, IReversibleActionsManager reversibleActionsManager) : base(windowService)
     {
         _documentService = documentService;
+        _reversibleActionsManager = reversibleActionsManager;
+
         Documents.Add(_documentService.CreateNewDocument());
         _selectedDocument = Documents.First();
 

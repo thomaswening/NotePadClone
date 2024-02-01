@@ -4,6 +4,8 @@ using System.Data;
 using System.Windows;
 
 using Microsoft.Extensions.DependencyInjection;
+
+using NotePadClone.ReversibleActions;
 using NotePadClone.Services;
 using NotePadClone.ViewModels;
 
@@ -30,6 +32,8 @@ namespace NotePadClone
         {
             services.AddSingleton<IWindowService, WindowService>();
             services.AddSingleton<IDocumentService, DocumentService>();
+            services.AddSingleton<IReversibleActionsManager, ReversibleActionsManager>();
+
             services.AddTransient<MainWindowVm>();
             services.AddTransient<MainWindow>();
         }
