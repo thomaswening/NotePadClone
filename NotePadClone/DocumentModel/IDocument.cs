@@ -13,4 +13,6 @@ public interface IDocument
 {
     string Content { get; set; }
     DocumentMetadata Metadata { get; }
+    void Insert(int position, string text);
+    void Delete(int position, int length);
 }
