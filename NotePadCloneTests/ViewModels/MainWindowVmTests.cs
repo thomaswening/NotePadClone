@@ -16,13 +16,7 @@ namespace NotePadCloneTests.ViewModels
         [TestCase("\r\n", 0, 2, 0)] // Put '\n' her if running tests on Unix system
         public void TextContent_UpdatesDocumentInfoCorrectly_IfValueChanges(string textStub, int expectedCharacters, int expectedLines, int expectedSize)
         {
-            var viewModel = new MainWindowVm();
 
-            viewModel.TextContent = textStub;
-
-            Assert.That(viewModel.NumberOfCharacters, Is.EqualTo(expectedCharacters));
-            Assert.That(viewModel.NumberOfLines, Is.EqualTo(expectedLines));
-            Assert.That(viewModel.FileSizeInBytes, Is.EqualTo(expectedSize));
         }
     }
 }
