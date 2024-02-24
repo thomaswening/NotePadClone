@@ -7,8 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NotePadClone.Services;
 using NotePadClone.ViewModels;
 
-using WpfWindowHandling.Services;
-
 namespace NotePadClone
 {
     /// <summary>
@@ -30,7 +28,7 @@ namespace NotePadClone
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IWindowService, WindowService>();
+            services.AddSingleton<WpfWindowHandling.Services.IWindowService, WindowService>();
             services.AddSingleton<IDocumentService, DocumentService>();
             services.AddTransient<MainWindowVm>();
             services.AddTransient<MainWindow>();
