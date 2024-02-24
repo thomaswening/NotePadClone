@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NotePadClone.Services;
 using NotePadClone.ViewModels;
 
+using WpfWindowHandling.Services;
+
 namespace NotePadClone
 {
     /// <summary>

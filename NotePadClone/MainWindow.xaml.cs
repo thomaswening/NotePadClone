@@ -18,6 +18,8 @@ using NotePadClone.ViewModels;
 
 using WpfEssentials.Base;
 
+using WpfWindowHandling.Services;
+
 namespace NotePadClone
 {
     /// <summary>

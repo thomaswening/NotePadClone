@@ -28,6 +28,13 @@
     <Reference Include="WpfEssentials">
       <HintPath>..\..\WpfEssentials\WpfEssentials\bin\Debug\net8.0-windows\WpfEssentials.dll</HintPath>
     </Reference>
+    <Reference Include="WpfWindowHandling">
+      <HintPath>..\..\WpfEssentials\WpfWindowHandling\obj\Debug\net8.0-windows\WpfWindowHandling.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
